@@ -1,0 +1,177 @@
+/opt/conda/envs/distill/lib/python3.10/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/cann-8.5.2 owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/opt/conda/envs/distill/lib/python3.10/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/cann-8.5.2/aarch64-linux/ascend_ops_install.info owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/opt/conda/envs/distill/lib/python3.10/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/cann-8.5.2 owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/opt/conda/envs/distill/lib/python3.10/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/cann-8.5.2/aarch64-linux/ascend_ops_install.info owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+device = npu:0 | out = output_qwen3p5_v4_lora
+pad_token_id = 248044 | processor: Qwen3VLProcessor
+loading base model (bf16) ...
+Loading weights:   0%|          | 0/473 [00:00<?, ?it/s]Loading weights: 100%|██████████| 473/473 [00:00<00:00, 6956.02it/s]
+/data/tf_q35_transfer/transformers/vision_utils.py:272: UserWarning: Cannot create tensor with interal format while allow_internel_format=False, tensor will be created with base format. (Triggered internally at build/CMakeFiles/torch_npu.dir/compiler_depend.ts:338.)
+  within = (torch.arange(counts.sum(), device=device) - starts) % (heights * widths)
+[transformers] `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+trainable params: 13,345,792 || all params: 866,331,712 || trainable%: 1.5405
+dataset size: 24251
+===== START: total_steps≈3032, warmup=90, eff_bs=16 =====
+[epoch 1/2] step 20/3032 loss 6.0747 lr 2.22e-05
+[epoch 1/2] step 40/3032 loss 4.1647 lr 4.44e-05
+[epoch 1/2] step 60/3032 loss 3.8812 lr 6.67e-05
+[epoch 1/2] step 80/3032 loss 3.5058 lr 8.89e-05
+[epoch 1/2] step 100/3032 loss 3.3888 lr 1.00e-04
+[epoch 1/2] step 120/3032 loss 3.4051 lr 1.00e-04
+[epoch 1/2] step 140/3032 loss 3.3971 lr 9.99e-05
+[epoch 1/2] step 160/3032 loss 3.3301 lr 9.99e-05
+[epoch 1/2] step 180/3032 loss 3.1446 lr 9.98e-05
+[epoch 1/2] step 200/3032 loss 3.0573 lr 9.97e-05
+[epoch 1/2] step 220/3032 loss 3.3233 lr 9.95e-05
+[epoch 1/2] step 240/3032 loss 2.9416 lr 9.94e-05
+[epoch 1/2] step 260/3032 loss 3.2854 lr 9.92e-05
+[epoch 1/2] step 280/3032 loss 2.8703 lr 9.90e-05
+[epoch 1/2] step 300/3032 loss 3.0239 lr 9.87e-05
+[epoch 1/2] step 320/3032 loss 3.2049 lr 9.85e-05
+[epoch 1/2] step 340/3032 loss 3.1055 lr 9.82e-05
+[epoch 1/2] step 360/3032 loss 2.9883 lr 9.79e-05
+[epoch 1/2] step 380/3032 loss 3.0334 lr 9.76e-05
+[epoch 1/2] step 400/3032 loss 3.0419 lr 9.73e-05
+[epoch 1/2] step 420/3032 loss 3.0180 lr 9.69e-05
+[epoch 1/2] step 440/3032 loss 2.9262 lr 9.65e-05
+[epoch 1/2] step 460/3032 loss 3.0913 lr 9.61e-05
+[epoch 1/2] step 480/3032 loss 2.9932 lr 9.57e-05
+[epoch 1/2] step 500/3032 loss 3.1187 lr 9.53e-05
+[epoch 1/2] step 520/3032 loss 3.0178 lr 9.48e-05
+[epoch 1/2] step 540/3032 loss 2.9913 lr 9.43e-05
+[guard_v4 08-28 19:44:40] start
+[epoch 1/2] step 560/3032 loss 2.9990 lr 9.38e-05
+[epoch 1/2] step 580/3032 loss 2.9013 lr 9.33e-05
+[epoch 1/2] step 600/3032 loss 2.8942 lr 9.28e-05
+[epoch 1/2] step 620/3032 loss 3.0061 lr 9.22e-05
+[epoch 1/2] step 640/3032 loss 2.8199 lr 9.16e-05
+[epoch 1/2] step 660/3032 loss 2.8264 lr 9.10e-05
+[epoch 1/2] step 680/3032 loss 2.8022 lr 9.04e-05
+[epoch 1/2] step 700/3032 loss 2.7678 lr 8.98e-05
+[epoch 1/2] step 720/3032 loss 2.9540 lr 8.91e-05
+[epoch 1/2] step 740/3032 loss 2.6923 lr 8.84e-05
+[epoch 1/2] step 760/3032 loss 2.8591 lr 8.77e-05
+[epoch 1/2] step 780/3032 loss 2.8526 lr 8.70e-05
+[epoch 1/2] step 800/3032 loss 3.0010 lr 8.63e-05
+[epoch 1/2] step 820/3032 loss 2.8192 lr 8.56e-05
+[epoch 1/2] step 840/3032 loss 2.6961 lr 8.48e-05
+[epoch 1/2] step 860/3032 loss 2.8043 lr 8.40e-05
+[epoch 1/2] step 880/3032 loss 2.8029 lr 8.32e-05
+[epoch 1/2] step 900/3032 loss 2.7136 lr 8.24e-05
+[epoch 1/2] step 920/3032 loss 2.8253 lr 8.16e-05
+[epoch 1/2] step 940/3032 loss 2.8171 lr 8.08e-05
+[epoch 1/2] step 960/3032 loss 2.8272 lr 7.99e-05
+[epoch 1/2] step 980/3032 loss 2.8783 lr 7.91e-05
+[epoch 1/2] step 1000/3032 loss 2.8431 lr 7.82e-05
+[epoch 1/2] step 1020/3032 loss 2.7607 lr 7.73e-05
+[epoch 1/2] step 1040/3032 loss 2.6433 lr 7.64e-05
+[epoch 1/2] step 1060/3032 loss 2.6944 lr 7.55e-05
+[epoch 1/2] step 1080/3032 loss 2.7405 lr 7.46e-05
+[epoch 1/2] step 1100/3032 loss 2.7222 lr 7.36e-05
+[epoch 1/2] step 1120/3032 loss 2.7715 lr 7.27e-05
+[epoch 1/2] step 1140/3032 loss 2.6737 lr 7.17e-05
+[epoch 1/2] step 1160/3032 loss 2.7938 lr 7.08e-05
+[epoch 1/2] step 1180/3032 loss 2.7630 lr 6.98e-05
+[epoch 1/2] step 1200/3032 loss 2.7548 lr 6.88e-05
+[epoch 1/2] step 1220/3032 loss 2.6904 lr 6.78e-05
+[epoch 1/2] step 1240/3032 loss 2.6933 lr 6.68e-05
+[epoch 1/2] step 1260/3032 loss 2.7835 lr 6.58e-05
+[epoch 1/2] step 1280/3032 loss 2.7664 lr 6.48e-05
+[epoch 1/2] step 1300/3032 loss 2.7217 lr 6.38e-05
+[epoch 1/2] step 1320/3032 loss 2.6570 lr 6.27e-05
+[epoch 1/2] step 1340/3032 loss 2.5624 lr 6.17e-05
+[epoch 1/2] step 1360/3032 loss 2.6837 lr 6.06e-05
+[epoch 1/2] step 1380/3032 loss 2.6022 lr 5.96e-05
+[epoch 1/2] step 1400/3032 loss 2.8301 lr 5.86e-05
+[epoch 1/2] step 1420/3032 loss 2.7954 lr 5.75e-05
+[epoch 1/2] step 1440/3032 loss 2.7534 lr 5.64e-05
+[epoch 1/2] step 1460/3032 loss 2.5714 lr 5.54e-05
+[epoch 1/2] step 1480/3032 loss 2.7990 lr 5.43e-05
+[epoch 1/2] step 1500/3032 loss 2.7014 lr 5.33e-05
+saved output_qwen3p5_v4_lora/checkpoint-1500
+saved output_qwen3p5_v4_lora/checkpoint-epoch1
+[epoch 2/2] step 1520/3032 loss 2.8969 lr 5.22e-05
+[epoch 2/2] step 1540/3032 loss 2.2461 lr 5.11e-05
+[epoch 2/2] step 1560/3032 loss 2.1874 lr 5.01e-05
+[epoch 2/2] step 1580/3032 loss 2.2074 lr 4.90e-05
+[epoch 2/2] step 1600/3032 loss 2.0497 lr 4.79e-05
+[epoch 2/2] step 1620/3032 loss 2.0430 lr 4.69e-05
+[epoch 2/2] step 1640/3032 loss 2.2124 lr 4.58e-05
+[epoch 2/2] step 1660/3032 loss 2.1905 lr 4.47e-05
+[epoch 2/2] step 1680/3032 loss 2.1828 lr 4.37e-05
+[epoch 2/2] step 1700/3032 loss 2.1721 lr 4.26e-05
+[epoch 2/2] step 1720/3032 loss 2.0945 lr 4.16e-05
+[epoch 2/2] step 1740/3032 loss 2.1370 lr 4.05e-05
+[epoch 2/2] step 1760/3032 loss 2.2486 lr 3.95e-05
+[epoch 2/2] step 1780/3032 loss 2.1401 lr 3.84e-05
+[epoch 2/2] step 1800/3032 loss 2.2516 lr 3.74e-05
+[epoch 2/2] step 1820/3032 loss 2.1876 lr 3.63e-05
+[epoch 2/2] step 1840/3032 loss 2.1838 lr 3.53e-05
+[epoch 2/2] step 1860/3032 loss 2.2668 lr 3.43e-05
+[epoch 2/2] step 1880/3032 loss 2.2028 lr 3.33e-05
+[epoch 2/2] step 1900/3032 loss 2.2731 lr 3.23e-05
+[epoch 2/2] step 1920/3032 loss 2.0443 lr 3.13e-05
+[epoch 2/2] step 1940/3032 loss 2.1211 lr 3.03e-05
+[epoch 2/2] step 1960/3032 loss 2.3321 lr 2.93e-05
+[epoch 2/2] step 1980/3032 loss 2.3047 lr 2.84e-05
+[epoch 2/2] step 2000/3032 loss 2.1632 lr 2.74e-05
+[epoch 2/2] step 2020/3032 loss 2.2475 lr 2.65e-05
+[epoch 2/2] step 2040/3032 loss 2.2090 lr 2.55e-05
+[epoch 2/2] step 2060/3032 loss 2.1092 lr 2.46e-05
+[epoch 2/2] step 2080/3032 loss 2.0988 lr 2.37e-05
+[epoch 2/2] step 2100/3032 loss 2.2124 lr 2.28e-05
+[epoch 2/2] step 2120/3032 loss 2.0825 lr 2.19e-05
+[epoch 2/2] step 2140/3032 loss 2.0929 lr 2.10e-05
+[epoch 2/2] step 2160/3032 loss 2.0321 lr 2.02e-05
+[epoch 2/2] step 2180/3032 loss 2.2114 lr 1.93e-05
+[epoch 2/2] step 2200/3032 loss 2.1675 lr 1.85e-05
+[epoch 2/2] step 2220/3032 loss 1.9655 lr 1.76e-05
+[epoch 2/2] step 2240/3032 loss 2.1119 lr 1.68e-05
+[epoch 2/2] step 2260/3032 loss 2.1590 lr 1.60e-05
+[epoch 2/2] step 2280/3032 loss 2.1149 lr 1.53e-05
+[epoch 2/2] step 2300/3032 loss 2.0876 lr 1.45e-05
+[epoch 2/2] step 2320/3032 loss 2.0844 lr 1.38e-05
+[epoch 2/2] step 2340/3032 loss 2.1517 lr 1.30e-05
+[epoch 2/2] step 2360/3032 loss 2.1353 lr 1.23e-05
+[epoch 2/2] step 2380/3032 loss 1.9969 lr 1.16e-05
+[epoch 2/2] step 2400/3032 loss 2.1537 lr 1.10e-05
+[epoch 2/2] step 2420/3032 loss 2.1240 lr 1.03e-05
+[epoch 2/2] step 2440/3032 loss 2.1877 lr 9.66e-06
+[epoch 2/2] step 2460/3032 loss 2.1276 lr 9.04e-06
+[epoch 2/2] step 2480/3032 loss 2.1744 lr 8.44e-06
+[epoch 2/2] step 2500/3032 loss 2.1453 lr 7.85e-06
+[epoch 2/2] step 2520/3032 loss 2.0476 lr 7.29e-06
+[epoch 2/2] step 2540/3032 loss 2.0723 lr 6.74e-06
+[epoch 2/2] step 2560/3032 loss 1.8703 lr 6.22e-06
+[epoch 2/2] step 2580/3032 loss 2.1188 lr 5.71e-06
+[epoch 2/2] step 2600/3032 loss 2.1178 lr 5.23e-06
+[epoch 2/2] step 2620/3032 loss 1.8757 lr 4.76e-06
+[epoch 2/2] step 2640/3032 loss 2.0886 lr 4.32e-06
+[epoch 2/2] step 2660/3032 loss 2.1238 lr 3.89e-06
+[epoch 2/2] step 2680/3032 loss 2.1630 lr 3.49e-06
+[epoch 2/2] step 2700/3032 loss 2.2297 lr 3.11e-06
+[epoch 2/2] step 2720/3032 loss 2.1331 lr 2.75e-06
+[epoch 2/2] step 2740/3032 loss 1.9817 lr 2.41e-06
+[epoch 2/2] step 2760/3032 loss 2.1271 lr 2.09e-06
+[epoch 2/2] step 2780/3032 loss 2.0742 lr 1.80e-06
+[epoch 2/2] step 2800/3032 loss 2.1421 lr 1.53e-06
+[epoch 2/2] step 2820/3032 loss 2.0769 lr 1.28e-06
+[epoch 2/2] step 2840/3032 loss 2.0238 lr 1.05e-06
+[epoch 2/2] step 2860/3032 loss 2.0564 lr 8.41e-07
+[epoch 2/2] step 2880/3032 loss 2.1705 lr 6.57e-07
+[epoch 2/2] step 2900/3032 loss 2.0354 lr 4.96e-07
+[epoch 2/2] step 2920/3032 loss 2.0575 lr 3.57e-07
+[epoch 2/2] step 2940/3032 loss 2.0809 lr 2.41e-07
+[epoch 2/2] step 2960/3032 loss 2.2717 lr 1.48e-07
+[epoch 2/2] step 2980/3032 loss 2.0823 lr 7.71e-08
+[epoch 2/2] step 3000/3032 loss 2.0761 lr 2.92e-08
+saved output_qwen3p5_v4_lora/checkpoint-3000
+[epoch 2/2] step 3020/3032 loss 2.0325 lr 4.10e-09
+saved output_qwen3p5_v4_lora/checkpoint-epoch2
+===== TRAINING DONE =====
+LoRA adapter saved to output_qwen3p5_v4_lora
+[guard_v4 08-29 05:55:17] 训练已完成 (adapter 存在), 退出

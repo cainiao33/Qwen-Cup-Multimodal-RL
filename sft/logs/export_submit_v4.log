@@ -1,0 +1,28 @@
+/opt/conda/envs/distill/lib/python3.10/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/cann-8.5.2 owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/opt/conda/envs/distill/lib/python3.10/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/cann-8.5.2/aarch64-linux/ascend_ops_install.info owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/opt/conda/envs/distill/lib/python3.10/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/cann-8.5.2 owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/opt/conda/envs/distill/lib/python3.10/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/cann-8.5.2/aarch64-linux/ascend_ops_install.info owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+loading base model for merge (cpu/bf16) ...
+Loading weights:   0%|          | 0/473 [00:00<?, ?it/s]Loading weights: 100%|██████████| 473/473 [00:00<00:00, 7490.22it/s]
+merging LoRA ...
+saving full model -> /data/g6d/submit_Qwen3p5-0.8B-g6d-v4
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:01<00:00,  1.65s/it]Writing model shards: 100%|██████████| 1/1 [00:01<00:00,  1.66s/it]
+  (skip missing) special_tokens_map.json
+
+导出目录内容:
+  chat_template.jinja  7755
+  config.json  2623
+  configuration.json  51
+  generation_config.json  116
+  merges.txt  3353259
+  model.safetensors  1706030528
+  preprocessor_config.json  390
+  tokenizer.json  12807982
+  tokenizer_config.json  16709
+  video_preprocessor_config.json  385
+  vocab.json  6722759
