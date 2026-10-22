@@ -9,7 +9,7 @@
 >
 > **Results**: preliminary round **41.8 pts** (500 problems, track best 43.6, ranked 20th → advanced) → finals online eval **20.2 pts** (same-protocol SFT baseline 18.2, RL gain **+2.0**), **ranked 9th online**; defense scores and final standings pending — will be added once announced.
 >
-> **How to run**: this repo is positioned as a **complete open-sourcing of the solution** — training/export script snapshots, real training logs, and the full technical report are all included. Training ran on Huawei Atlas 900 NPU + torch_npu (scripts are snapshots of that environment); the eval set is not public, so platform scores cannot be reproduced locally. Model weights are hosted on Hugging Face (links in [Reproduction Notes](#-reproduction-notes)).
+> **How to run**: this repo is positioned as a **complete open-sourcing of the solution** — training/export script snapshots, real training logs, and the full technical report are all included. Training ran on Huawei Atlas 900 NPU + torch_npu (scripts are snapshots of that environment); the eval set is not public, so platform scores cannot be reproduced locally. Model weights are hosted on [Hugging Face](https://huggingface.co/huangxiu/Qwen3.5-0.8B-qwencup) (links in [Reproduction Notes](#-reproduction-notes)).
 
 ---
 
@@ -176,8 +176,8 @@ This repo **does not offer one-click end-to-end reproduction**; scope and limits
 
   | Model | Description | Download |
   | --- | --- | --- |
-  | v4 (preliminary 41.8) | Qwen3.5-0.8B + merged LoRA export, bf16 | <!-- TODO: HuggingFace link --> pending upload |
-  | rlx30 (finals 20.2) | v4 + GRPO 30 steps, zip md5 `37f81f331ed2ca75fc87d1045ab1a1b3` | <!-- TODO: HuggingFace link --> pending upload |
+  | v4 (preliminary 41.8) | Qwen3.5-0.8B + merged LoRA export, bf16 | [weights `preliminary/`](https://huggingface.co/huangxiu/Qwen3.5-0.8B-qwencup/tree/main/preliminary) |
+  | rlx30 (finals 20.2) | v4 + GRPO 30 steps, zip md5 `37f81f331ed2ca75fc87d1045ab1a1b3` | [weights `finals/`](https://huggingface.co/huangxiu/Qwen3.5-0.8B-qwencup/tree/main/finals) |
 
 ## Acknowledgements
 

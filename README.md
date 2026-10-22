@@ -9,7 +9,7 @@
 >
 > **成绩**:初赛 **41.8 分**(500 题,赛道最高 43.6,第 20 名晋级)→ 决赛线上评测 **20.2 分**(同口径 SFT 基线 18.2,RL 增益 **+2.0**),**线上排名第 9**;答辩成绩与总排名待公布,公布后补记。
 >
-> **怎么跑**:本仓库定位是**方案完整开源**——训练/导出脚本快照、真实训练日志与技术报告全部可见。训练在华为 Atlas 900 NPU + torch_npu 环境完成(脚本为该环境的服务器快照);评测集不公开,平台分无法本地复现。模型权重托管于 Hugging Face(链接见[复现说明](#-复现说明))。
+> **怎么跑**:本仓库定位是**方案完整开源**——训练/导出脚本快照、真实训练日志与技术报告全部可见。训练在华为 Atlas 900 NPU + torch_npu 环境完成(脚本为该环境的服务器快照);评测集不公开,平台分无法本地复现。模型权重托管于 [Hugging Face](https://huggingface.co/huangxiu/Qwen3.5-0.8B-qwencup)(链接见[复现说明](#-复现说明))。
 
 ---
 
@@ -176,8 +176,8 @@ Qwen-Cup-Multimodal-RL/
 
   | 模型 | 说明 | 下载 |
   | --- | --- | --- |
-  | v4(初赛 41.8) | Qwen3.5-0.8B + LoRA 合并导出,bf16 | <!-- TODO: HuggingFace 链接 --> 待上传 |
-  | rlx30(决赛 20.2) | v4 + GRPO 30 步,zip md5 `37f81f331ed2ca75fc87d1045ab1a1b3` | <!-- TODO: HuggingFace 链接 --> 待上传 |
+  | v4(初赛 41.8) | Qwen3.5-0.8B + LoRA 合并导出,bf16 | [权重 `preliminary/`](https://huggingface.co/huangxiu/Qwen3.5-0.8B-qwencup/tree/main/preliminary) |
+  | rlx30(决赛 20.2) | v4 + GRPO 30 步,zip md5 `37f81f331ed2ca75fc87d1045ab1a1b3` | [权重 `finals/`](https://huggingface.co/huangxiu/Qwen3.5-0.8B-qwencup/tree/main/finals) |
 
 ## 致谢
 
