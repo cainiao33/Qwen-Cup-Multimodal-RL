@@ -170,7 +170,7 @@ qianwen-cup-multimodal-rl/
 本仓库**不提供端到端一键复现**,原因与边界如下:
 
 - **评测侧**:评测集(六维 500 题)不公开,平台分只能由赛事方评测产生;仓库内全部平台分均为官方评测读数。
-- **训练侧**:训练在 Atlas 900 NPU + CANN + torch_npu 环境完成。[sft/scripts/](sft/scripts/) 为该环境服务器快照的**脱敏副本**(仅内部路径与解释器路径替换为占位符,逻辑未改动),配套 [sft/logs/](sft/logs/) 为对应真实训练日志。GRPO 侧已含三步流水(`01_run_rlx30.sh` 训练 → `02_export_rlx30.sh` 导出打包 → `03_pack_flat_zip.py` 校验)与全超参快照 `config_rlx30.json`,复现流程与已知坑见 [grpo/README.md](grpo/README.md);核心原件(`grpo_apply_v14.py` 等 8 件,含与官方评测逐字一致的奖励函数实现)待归档补入。
+- **训练侧**:训练在 Atlas 900 NPU + CANN + torch_npu 环境完成。[sft/scripts/](sft/scripts/) 为该环境服务器快照的**脱敏副本**(仅内部路径与解释器路径替换为占位符,逻辑未改动),配套 [sft/logs/](sft/logs/) 为对应真实训练日志。GRPO 侧已**完整入库**:三步流水(`01_run_rlx30.sh` 训练 → `02_export_rlx30.sh` 导出打包 → `03_pack_flat_zip.py` 校验)、训练主程序 `grpo_apply_v14.py`(含与官方评测逐字一致的奖励函数实现,附 09-15/09-18 两版)及其余原件,md5 与 MANIFEST 逐一核对一致;复现流程与已知坑见 [grpo/README.md](grpo/README.md)。训练日志与 09-13 训练当日版仅存服务器。
 - **数据侧**:三级数据漏斗(113K 蒸馏合成 → 24,251 SFT 清洗精选 → 1,709 RL 定向浓缩)的来源、合成、清洗、配比与奖励-评测对齐详见 **[docs/data-engineering.md](docs/data-engineering.md)**;完整实验数据见[技术报告](docs/finals-technical-report.md) §4–§6。数据文件本身未随仓库分发。
 - **权重**:
 
