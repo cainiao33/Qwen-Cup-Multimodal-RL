@@ -199,7 +199,7 @@ This repo **does not offer one-click end-to-end reproduction**; scope and limits
 
 ## Acknowledgements
 
-Thanks to our teammates on team 广州智行科技 @JaysonWong017 · @bgunshui · @qiuy-ue · @LESIWOLEE — from self-building the training pool out of public datasets, through teacher distillation and cleaning, to every iteration of the finals RL, this solution was ground out by the five of us together.
+Thanks to our teammates on team 广州智行科技 [@JaysonWong017](https://github.com/JaysonWong017) · [@bgunshui](https://github.com/bgunshui) · [@qiuy-ue](https://github.com/qiuy-ue) · [@LESIWOLEE](https://github.com/LESIWOLEE) — from self-building the training pool out of public datasets, through teacher distillation and cleaning, to every iteration of the finals RL, this solution was ground out by the five of us together.
 
 Also thanks to:
 

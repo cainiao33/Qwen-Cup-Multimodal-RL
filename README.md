@@ -199,7 +199,7 @@ Qwen-Cup-Multimodal-RL/
 
 ## 致谢
 
-感谢队伍「广州智行科技」的队友们 @JaysonWong017 · @bgunshui · @qiuy-ue · @LESIWOLEE——从公开数据自建训练池、教师蒸馏与清洗,到决赛 RL 的每一轮迭代,这份方案是五个人一起磨出来的。
+感谢队伍「广州智行科技」的队友们 [@JaysonWong017](https://github.com/JaysonWong017) · [@bgunshui](https://github.com/bgunshui) · [@qiuy-ue](https://github.com/qiuy-ue) · [@LESIWOLEE](https://github.com/LESIWOLEE)——从公开数据自建训练池、教师蒸馏与清洗,到决赛 RL 的每一轮迭代,这份方案是五个人一起磨出来的。
 
 同时感谢:
 
