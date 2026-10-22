@@ -106,6 +106,8 @@ R = acc + 0.5 × fmt  (结构上等效于三档离散奖励)
 
 超过 30 步后平台分随剂量单调下降——过大剂量导致灾难性遗忘(机制见发现 3)。
 
+> 轶事:rlx30 的 30 步本身就是一次事故的产物——原计划 40 步,第 35 步存盘时磁盘爆满,救回 `checkpoint-30` 导出(同 seed/同数据序下与独立 30 步 run 逐 bit 等价)。事后剂量轴消融证明 30 步恰为峰值,详见 [grpo/README.md](grpo/README.md)。
+
 ### 2. 同权重 ZIP CRC 消融:不重训的因果结论
 
 四个提交包共享同一份权重(`model.safetensors` 逐字节一致,zip 逐成员 CRC 审计确认仅 `generation_config.json` 一件不同)——**不重训即可获得推理侧因果级结论**:
@@ -160,7 +162,7 @@ qianwen-cup-multimodal-rl/
 ├── sft/                             # 阶段一:教师蒸馏 SFT(初赛 v4)
 │   ├── scripts/                     # 训练/看门狗/数据合并/导出 5 脚本(服务器快照·脱敏)
 │   └── logs/                        # 真实训练与导出日志(3,032 步,loss 6.07 → 2.03)
-└── grpo/                            # 阶段二:GRPO RL(决赛 rlx30,脚本归档校验中)
+└── grpo/                            # 阶段二:GRPO RL(决赛 rlx30 训练/导出/打包 + 全超参快照)
 ```
 
 ## 🔄 复现说明
@@ -168,7 +170,7 @@ qianwen-cup-multimodal-rl/
 本仓库**不提供端到端一键复现**,原因与边界如下:
 
 - **评测侧**:评测集(六维 500 题)不公开,平台分只能由赛事方评测产生;仓库内全部平台分均为官方评测读数。
-- **训练侧**:训练在 Atlas 900 NPU + CANN + torch_npu 环境完成。[sft/scripts/](sft/scripts/) 为该环境服务器快照的**脱敏副本**(仅内部路径与解释器路径替换为占位符,逻辑未改动),配套 [sft/logs/](sft/logs/) 为对应真实训练日志。GRPO 侧脚本(`grpo_apply_v14.py` 等,含与官方评测逐字一致的奖励函数实现)正在归档校验,见 [grpo/](grpo/)。
+- **训练侧**:训练在 Atlas 900 NPU + CANN + torch_npu 环境完成。[sft/scripts/](sft/scripts/) 为该环境服务器快照的**脱敏副本**(仅内部路径与解释器路径替换为占位符,逻辑未改动),配套 [sft/logs/](sft/logs/) 为对应真实训练日志。GRPO 侧已含三步流水(`01_run_rlx30.sh` 训练 → `02_export_rlx30.sh` 导出打包 → `03_pack_flat_zip.py` 校验)与全超参快照 `config_rlx30.json`,复现流程与已知坑见 [grpo/README.md](grpo/README.md);核心原件(`grpo_apply_v14.py` 等 8 件,含与官方评测逐字一致的奖励函数实现)待归档补入。
 - **数据侧**:三级数据漏斗(113K 蒸馏合成 → 24,251 SFT 清洗精选 → 1,709 RL 定向浓缩)的来源、合成、清洗、配比与奖励-评测对齐详见 **[docs/data-engineering.md](docs/data-engineering.md)**;完整实验数据见[技术报告](docs/finals-technical-report.md) §4–§6。数据文件本身未随仓库分发。
 - **权重**:
 

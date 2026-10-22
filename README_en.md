@@ -106,6 +106,8 @@ The answer extractor (`rfind("\boxed{")` + bracket-depth counting) matches the o
 
 Beyond 30 steps the score falls monotonically with dose — larger doses cause catastrophic forgetting (mechanism in Finding 3).
 
+> Anecdote: the 30-step recipe itself was born of an accident — a 40-step run crashed with a full disk at step 35, and `checkpoint-30` was salvaged (bit-equivalent to a standalone 30-step run under the same seed/data order). The dose-axis ablation later confirmed 30 as the peak; see [grpo/README.md](grpo/README.md).
+
 ### 2. Same-weights ZIP-CRC ablation: causal conclusions without retraining
 
 Four submission packages share one identical set of weights (`model.safetensors` byte-identical; per-member zip CRC audit confirms only `generation_config.json` differs) — **causal inference-side conclusions with zero retraining**:
@@ -160,7 +162,7 @@ qianwen-cup-multimodal-rl/
 ├── sft/                             # Stage 1: teacher-distillation SFT (preliminary v4)
 │   ├── scripts/                     # 5 scripts: train/watchdog/merge/export (server snapshot, sanitized)
 │   └── logs/                        # real training & export logs (3,032 steps, loss 6.07 → 2.03)
-└── grpo/                            # Stage 2: GRPO RL (finals rlx30; scripts under archival verification)
+└── grpo/                            # Stage 2: GRPO RL (finals rlx30: train/export/pack scripts + full hyperparameter snapshot)
 ```
 
 ## 🔄 Reproduction Notes
@@ -168,7 +170,7 @@ qianwen-cup-multimodal-rl/
 This repo **does not offer one-click end-to-end reproduction**; scope and limits:
 
 - **Eval side**: the eval set (6-dim, 500 problems) is not public — platform scores can only come from the organizer; every platform score in this repo is an official reading.
-- **Training side**: training ran on Atlas 900 NPU + CANN + torch_npu. [sft/scripts/](sft/scripts/) holds sanitized snapshots from that environment (only internal paths and the interpreter path replaced with placeholders; logic untouched), with the matching real logs in [sft/logs/](sft/logs/). The GRPO scripts (`grpo_apply_v14.py` et al., including the reward implementation verbatim-aligned with the official eval) are being archived — see [grpo/](grpo/).
+- **Training side**: training ran on Atlas 900 NPU + CANN + torch_npu. [sft/scripts/](sft/scripts/) holds sanitized snapshots from that environment (only internal paths and the interpreter path replaced with placeholders; logic untouched), with the matching real logs in [sft/logs/](sft/logs/). The GRPO side now ships the 3-step pipeline (`01_run_rlx30.sh` train → `02_export_rlx30.sh` export+pack → `03_pack_flat_zip.py` verify) plus the full hyperparameter snapshot `config_rlx30.json`; workflow and known pitfalls in [grpo/README.md](grpo/README.md). The core originals (8 files incl. `grpo_apply_v14.py`, the reward implementation verbatim-aligned with the official eval) are pending archival.
 - **Data side**: how the 3-level data funnel (113K distillate → 24,251 SFT curation → 1,709 RL pool) was sourced, synthesized, cleaned, mixed, and reward-aligned is documented in **[docs/data-engineering.md](docs/data-engineering.md)** (Chinese); full experiment data in the [technical report](docs/finals-technical-report.md) §4–§6. The data files themselves are not distributed with the repo.
 - **Weights**:
 

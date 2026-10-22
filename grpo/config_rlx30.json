@@ -1,0 +1,84 @@
+{
+  "artifact": "rlx30",
+  "platform_score": {
+    "best": 20.2,
+    "readings": [19.6, 20.2, 19.6, 20.0],
+    "mu": 19.85,
+    "sigma_judge": 0.29,
+    "n": 4,
+    "note": "同一 md5 重复投递 4 次的读数；20.2 = 本队决赛最高分"
+  },
+  "submit_package": {
+    "zip": "qianwen_submit_rlx30_final.zip",
+    "md5": "37f81f331ed2ca75fc87d1045ab1a1b3",
+    "size_bytes": 1363778296,
+    "files": 13,
+    "layout": "flat (no directories)",
+    "submit_dir": "submit_Qwen3p5-0.8B-g6d-rlx30-rl"
+  },
+  "base_model": {
+    "path": "submit_Qwen3p5-0.8B-g6d-v4",
+    "safetensors_md5": "34475d88f4e1d4fc26543e8a64db7bf8",
+    "meaning": "初赛 41.8 分包，决赛唯一合规起点",
+    "sft_recipe": "基座 + train_v4.jsonl 24251 条 / 2ep / lr 1e-4 / LoRA r16 a32 / seed 42",
+    "sft_platform_score": 18.2
+  },
+  "rl": {
+    "framework": "GRPO (TRL 0.29.1, GRPOTrainer 自建封装 grpo_apply_v14.py)",
+    "use_vllm": false,
+    "data": "data/abstract/teacher_output/rl3_data.jsonl",
+    "data_name": "rl3_data_abs.jsonl",
+    "data_size": 1709,
+    "data_content": "RAVEN 九宫格抽象推理，8 格推第 9 格，8 选 1，答案 \\boxed{1..8}",
+    "steps": 30,
+    "learning_rate": 1e-06,
+    "lr_schedule": "constant",
+    "beta_kl": 0.2,
+    "num_generations_k": 8,
+    "seed": 42,
+    "max_completion_length": 256,
+    "per_device_train_batch_size": 4,
+    "gradient_accumulation_steps": 2,
+    "effective_batch_prompts": 8,
+    "total_prompts_seen": 240,
+    "loss_type": "dapo (TRL default)",
+    "reward": {
+      "mode": "platform",
+      "extractor": "rfind('\\\\boxed{'|'boxed{') + 括号深度计数，与 eval_val.py 逐字一致",
+      "normalizer": "eval 口径（去 \\s$\\,，。:：;；、（）() + lower）",
+      "scale": "抽不到=0.0 / 归一相等=1.0 / boxed 但错=0.05",
+      "part_credit": 0.0,
+      "len_penalty": 0.0
+    },
+    "in_pool_avg_reward": 0.088,
+    "training_seconds": 212,
+    "seconds_per_step": 7.1,
+    "end_to_end_minutes": 7.5,
+    "hardware": "Atlas 900 A2 / 8x Ascend 910B, 单卡 (ASCEND_RT_VISIBLE_DEVICES)"
+  },
+  "history": {
+    "intended_steps": 40,
+    "actual_crash": "第 35 步存盘时 No space left on device",
+    "salvaged_checkpoint": "grpo_rlx40_out/checkpoint-30",
+    "equivalence": "同 seed / 同数据序 ⇒ 30 步 run 与 40 步 run 的前 30 步逐 bit 等价"
+  },
+  "export": {
+    "script": "export_v14.py rl",
+    "precision": "fp32 ckpt -> bf16 weights",
+    "config_dtype_fix": "config.json / text_config / vision_config 的 dtype 统一改写为 bfloat16",
+    "known_pitfall": "未改写时 from_pretrained 按 fp32 加载：3.41 GB vs 1.71 GB，耗时约 2 倍"
+  },
+  "ablation_context": {
+    "step_axis": {"10": 19.2, "20": null, "30": 20.2, "50": 17.8, "60": 16.8},
+    "k_axis": {"8": 20.2, "16": 16.6},
+    "decode_probe": {"temperature_1.15": null, "max_new_tokens_2048": 19.8, "greedy": 16.8},
+    "pool_axis": {
+      "abstract_1709": 20.2,
+      "six_dim_1336": 17.8,
+      "six_dim_full_2175": 16.8,
+      "physics_1000": 18.8,
+      "counting_1709": 16.4
+    },
+    "conclusion": "0.8B 的 RL 最优 = 极小剂量锚定（30 步 / β0.2 / lr1e-6）；池内学习量与平台分强反相关"
+  }
+}
