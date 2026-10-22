@@ -50,7 +50,7 @@ Still server-only (not locally obtainable): training logs `grpo_rlx*.log`, the t
 | Hardware | Atlas 900 A2, single card |
 | Cost | Training 212 s (7.1 s/step), end-to-end ≈ 7.5 min |
 
-**Headline number**: the mean in-pool reward is only **0.088** (barely learned) yet it took the top score — for a 0.8B model the RL optimum is *minimal-dose anchoring*, not *learning more*. K16 tripled effective learning and lost 3.25 pts; 50/60 steps lost 2.4/3.4; the six-dimension pool lost 2.4. All in the same direction.
+**Headline number**: the mean in-pool reward is only **0.088** (barely learned) yet it took the top score — for a 0.8B model the RL optimum is *minimal-dose anchoring*, not *learning more*. K16 doubled effective learning and lost 3.25 pts; 50/60 steps lost 2.05/3.05; the six-dimension pool lost 2.05. All in the same direction.
 
 ## 3. Three-Step Reproduction
 
@@ -81,7 +81,7 @@ Byte-identical md5s are not reproducible (README text and safetensors serializat
 
 1. **rlx30 is not a standalone run.** The original dose-axis script launched **40 steps**; it crashed with a full disk while saving at step 35, so `grpo_rlx40_out/checkpoint-30` was exported instead. Same seed / same data order ⇒ the first 30 steps are bit-identical, so `01_run_rlx30.sh` simply runs 30 steps with a single save at the end (`--save_steps 30 --save_only_model`) — equivalent, without repeating the disk-full crash.
 2. **The export must fix dtype labels.** RL export copies the GRPO (fp32) `config.json` verbatim while the weights are bf16. Unfixed, `from_pretrained` loads as fp32: **3.41 GB vs 1.71 GB and ~2× the load time**. `export_v14.py` has the fix (config / text_config / vision_config), and the `02` script prints `"dtype": "bfloat16"` after export for confirmation.
-3. **Do not enable `--mp` (image-scale correction).** Measured 16.4 (−3.8). Its only difference from rlx30 is two lines in `processor_config.json` / `preprocessor_config.json` — a direction already causally falsified.
+3. **Do not enable `--mp` (image-scale correction).** Measured 16.4 (−3.45 vs the same-package mean 19.85; −3.8 vs the 20.2 best). Its only difference from rlx30 is two lines in `processor_config.json` / `preprocessor_config.json` — a direction already causally falsified.
 
 ## 5. Version Differences (Disclosed As-Is)
 

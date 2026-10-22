@@ -38,7 +38,7 @@ Preliminary 41.8                            Finals 20.2 (v4-SFT baseline 18.2 �
 Key design principles:
 
 1. **SFT for breadth, RL for depth**: the SFT stage builds a foundation of high-quality image-text instruction data via teacher distillation, covering all six dimensions; the RL stage applies "minimal-dose" fine calibration, avoiding catastrophic forgetting on a 0.8B model.
-2. **Rule-based reward RL**: TRL GRPOTrainer (0.29.1) + vLLM online sampling; the reward is a verifiable rule-based reward (answer equality + format score).
+2. **Rule-based reward RL**: TRL GRPOTrainer (0.29.1, use_vllm=False); the reward is a verifiable rule-based reward (answer equality + format score).
 3. **Fully reproducible pipeline**: all scripts versioned (train / export / pack / verify) with resumable runs; artifacts kept on the server (Atlas 900 NPU), the backup disk, and locally — every file cross-verified byte-for-byte by md5.
 
 ## 4. Data Construction & Processing
@@ -86,7 +86,7 @@ The three-level data funnel: **113,159 (full distillate) → 24,251 (SFT curated
 
 ### 6.1 Motivation & Framework
 
-The finals require an RL-trained model starting from the preliminary model as the sole starting point. We use **TRL GRPOTrainer (0.29.1) + vLLM online sampling**, with a self-built training script `grpo_apply_v14.py`. Rationale: given the 0.8B model + NPU memory constraints, PPO's separate value network is not worth it; GRPO is critic-free, its within-group normalization naturally fits verifiable rewards, and it is simple to implement and numerically stable.
+The finals require an RL-trained model starting from the preliminary model as the sole starting point. We use **TRL GRPOTrainer (0.29.1, use_vllm=False)**, with a self-built training script `grpo_apply_v14.py`. Rationale: given the 0.8B model + NPU memory constraints, PPO's separate value network is not worth it; GRPO is critic-free, its within-group normalization naturally fits verifiable rewards, and it is simple to implement and numerically stable.
 
 ### 6.2 Reward Design
 
@@ -134,10 +134,10 @@ Methodological innovation: four submission packages share one identical set of w
 | Axis | Sole variable changed | Score | Δ | Conclusion |
 | --- | --- | ---: | ---: | --- |
 | Baseline | platform-default sampling (same-package 4-run μ) | 19.85 | — | the temperature curve peaks exactly at the platform default |
-| Decoding | greedy (do_sample=false) | 16.8 | **−3.0** | sampling is a load-bearing pillar |
-| Decoding | temperature 1.15 / top_p 0.95 | 16.6 | **−3.05** | the default is the peak |
+| Decoding | greedy (do_sample=false) | 16.8 | **−3.05** | sampling is a load-bearing pillar |
+| Decoding | temperature 1.15 / top_p 0.95 | 16.6 | **−3.25** | the default is the peak |
 | Gen length | +max_new_tokens 2048 | 19.8 | −0.05 | zero effect (reverse evidence the weights are byte-identical) |
-| Preproc | longest_edge 16,777,216 → 1,638,400 | 16.4 | **−3.2** | 56.7% of eval images lose ~90% of pixels — detail destroyed |
+| Preproc | longest_edge 16,777,216 → 1,638,400 | 16.4 | **−3.45** | 56.7% of eval images lose ~90% of pixels — detail destroyed |
 
 ⇒ **Sampling buys ~3 pts for free; keep every inference-side parameter at the platform default.**
 
@@ -161,9 +161,9 @@ Methodological innovation: four submission packages share one identical set of w
 | rlx30 (abstract) | **0.088** (barely learned) | **20.2** |
 | ph1 (physics) | 0.843 | 18.8 |
 | h7 (counting) | 0.644 | 16.4 |
-| h9k16 (K16) | 3× effective learning | 16.6 |
+| h9k16 (K16) | 2× effective learning | 16.6 |
 
-Four independent points on one line: **in-pool learning anti-correlates strongly with the platform score.** The K16 ablation supplies the mechanism: in-pool reward peak 0.287→0.581 (3× learning efficiency), zero-gradient steps 51%→27%, yet the score drops 3.25 — a 0.8B model learning RL shortcuts in the pool crowds out its already-limited capacity, at the cost of forgetting other dimensions.
+Four independent points on one line: **in-pool learning anti-correlates strongly with the platform score.** The K16 ablation supplies the mechanism: in-pool reward peak 0.287→0.581 (roughly doubled), zero-gradient steps 51%→27%, yet the score drops 3.25 — a 0.8B model learning RL shortcuts in the pool crowds out its already-limited capacity, at the cost of forgetting other dimensions.
 
 ⇒ **The optimal 0.8B RL policy = minimal-dose anchoring** (30 steps + β 0.2 + lr 1e-6): RL as fine calibration, not large policy updates. rlx30's 0.088 in-pool learning is the direct product of exactly this set of constraints.
 

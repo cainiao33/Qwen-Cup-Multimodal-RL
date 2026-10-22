@@ -12,7 +12,7 @@ Packaged: 2026-09-04 | Source: training server `/data/g6d/` + local `scripts/`
 | Score | Preliminary round **41.8 pts** (500-problem eval judged by qwen-plus; track best 43.6), ranked 20th — the last advancing slot |
 | Training window | Started 2026-08-28 14:13 → finished 2026-08-29 05:55 (single uninterrupted run, no restarts) |
 | Data | `train_v4.jsonl`, **24,251 samples** = train_v2 legacy data (17,924) + round-2 freshly distilled & verified (~6,327: spatial / physics / numeric / counting) |
-| Config | 2 epochs / LoRA r16 α32 / lr 1e-4 / bs4 × grad_accum4 (eff_bs 16) / max_len 2048 / NPU ×2 |
+| Config | 2 epochs / LoRA r16 α32 / lr 1e-4 / bs4 × grad_accum4 (eff_bs 16) / max_len 2048 / NPU 2 (single card) |
 | Script lineage | v4 and v3 share identical configs, only data scaled up → a variable-isolation experiment validating the "data-side gain" (config side had already yielded +3.4; the data side added +0.4 more) |
 | Related weights | Backup disk `蒸馏任务交付/g6d/model_submit_v4.zip` (1.36 GB, exported 8/29 13:14) |
 

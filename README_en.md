@@ -81,12 +81,12 @@ The answer extractor (`rfind("\boxed{")` + bracket-depth counting) matches the o
 
 | Design choice | Value | Rationale |
 | --- | --- | --- |
-| Framework | TRL 0.29.1 GRPOTrainer + vLLM online sampling | critic-free, memory-friendly, stable |
+| Framework | TRL 0.29.1 GRPOTrainer (use_vllm=False, HF generate sampling) | critic-free, memory-friendly, stable |
 | Group size K | 8 | K16 doubled effective learning yet lost 3.25 pts — K8 is the sweet spot |
 | Steps | **30 (small dose)** | measured peak of the dose axis (below) |
 | LR / KL β | 1e-6 constant / 0.2 | limit weight drift, anchor to the preliminary start |
 | Effective batch | 8 prompts/step, 240 prompts total | 30 steps consume only 14% of the pool — no shortcut overfitting |
-| Data pool | RAVEN 3×3 abstract-reasoning matrices, 1,709 items (single-dimension, high purity) | association (0.212) was the 2nd-weakest dim with 100% reward-signal coverage — and abstract-pattern matrices (3×3 IQ-test style) are one of the four official finals dimensions |
+| Data pool | RAVEN 3×3 abstract-reasoning matrices, 1,709 items (single-dimension, high purity) | association (0.212) was the 2nd-weakest dim with 100% reward-signal coverage — and abstract-pattern matrices (3×3 IQ-test style) are one of the four core task directions in the official finals brief |
 | Compliance gate | starting-weights md5 verified byte-for-byte in a pre-training script | hard rule: no intermediate SFT, no other starting point |
 | Cost | 7.5 min end-to-end (212 s = 7.1 s/step) | ablation iterations are extremely cheap |
 
@@ -131,10 +131,10 @@ Four submission packages share one identical set of weights (`model.safetensors`
 | Axis | Sole variable changed | Score | Δ | Conclusion |
 | --- | --- | ---: | ---: | --- |
 | Baseline | platform-default sampling (same-package 4-run μ) | 19.85 | — | the temperature curve peaks exactly at the platform default |
-| Decoding | greedy (do_sample=false) | 16.8 | **−3.0** | sampling is a load-bearing pillar |
-| Decoding | temperature 1.15 / top_p 0.95 | 16.6 | **−3.05** | the default is the peak |
+| Decoding | greedy (do_sample=false) | 16.8 | **−3.05** | sampling is a load-bearing pillar |
+| Decoding | temperature 1.15 / top_p 0.95 | 16.6 | **−3.25** | the default is the peak |
 | Gen length | +max_new_tokens 2048 | 19.8 | −0.05 | zero effect (reverse evidence the weights are identical) |
-| Preproc | longest_edge 16,777,216 → 1,638,400 | 16.4 | **−3.2** | 56.7% of eval images lose ~90% of pixels — detail destroyed |
+| Preproc | longest_edge 16,777,216 → 1,638,400 | 16.4 | **−3.45** | 56.7% of eval images lose ~90% of pixels — detail destroyed |
 
 ⇒ Sampling buys ~3 pts for free; keep every inference-side parameter at the platform default.
 
@@ -145,9 +145,9 @@ Four submission packages share one identical set of weights (`model.safetensors`
 | rlx30 (abstract) | **0.088** (barely learned) | **20.2** |
 | ph1 (physics) | 0.843 | 18.8 |
 | h7 (counting) | 0.644 | 16.4 |
-| h9k16 (K16) | 3× effective learning | 16.6 |
+| h9k16 (K16) | 2× effective learning | 16.6 |
 
-Four independent points on one line: the more learned in-pool, the lower the platform score. The K16 ablation supplies the mechanism: in-pool reward peak 0.287→0.581 (3× learning efficiency), zero-gradient steps 51%→27%, yet the score drops 3.25 — a 0.8B model learning RL shortcuts in the pool crowds out its limited capacity at the cost of forgetting other dimensions.
+Four independent points on one line: the more learned in-pool, the lower the platform score. The K16 ablation supplies the mechanism: in-pool reward peak 0.287→0.581 (roughly doubled), zero-gradient steps 51%→27%, yet the score drops 3.25 — a 0.8B model learning RL shortcuts in the pool crowds out its limited capacity at the cost of forgetting other dimensions.
 
 The data-pool axis agrees: abstract single-dim (RAVEN 1,709) 20.2 > physics 18.8 > six-dim balanced 17.8 > six-dim augmented 16.8 > counting 16.4 — **distribution match with the hidden eval set is what matters, not coverage**.
 

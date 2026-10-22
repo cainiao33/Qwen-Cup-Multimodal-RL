@@ -12,7 +12,7 @@
 | 成绩 | 初赛 **41.8 分**（500 条 qwen-plus judge，赛道最高 43.6），排名第 20 压线晋级决赛 |
 | 训练窗口 | 2026-08-28 14:13 启动 → 2026-08-29 05:55 完成（单次跑完，无中断无重启） |
 | 数据 | train_v4.jsonl 共 **24251 条** = train_v2 旧数据(17924) + round2 新蒸馏验真后(约 6327，spatial/physics/numeric/counting) |
-| 配置 | 2 epoch / LoRA r16 α32 / lr 1e-4 / bs4 × grad_accum4 (eff_bs 16) / max_len 2048 / NPU 2 |
+| 配置 | 2 epoch / LoRA r16 α32 / lr 1e-4 / bs4 × grad_accum4 (eff_bs 16) / max_len 2048 / 单卡 NPU(2 号卡) |
 | 脚本归属 | v4 与 v3 配置相同、仅数据规模扩大 → 验证「数据侧收益」变量隔离实验（配置 +3.4 已吃满，数据侧再 +0.4） |
 | 关联权重 | 备份盘 `蒸馏任务交付/g6d/model_submit_v4.zip`（1.36GB，8/29 13:14 导出） |
 

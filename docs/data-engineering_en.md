@@ -97,7 +97,7 @@ Round 2 topped up distillation for spatial / physics / numeric / counting (image
 
 The top two categories exactly cover the first two official finals dimensions; abstract shapes take only 7.25% but preserved a foundation in that direction for the RL stage (see §5 — which is exactly where the final RL gain came from).
 
-Note: the percentages in this table categorize the same training data **by the four finals dimensions** (task nature), while §2 labels by six dimensions — two statistical lenses on the same data; both distillation rounds' candidate pool stayed within the public datasets of §1, and round 2 introduced no private sources either.
+Note: the percentages in this table categorize the same training data **by the official brief's four task directions** (a task-type grouping; the eval taxonomy is the six dimensions), while §2 labels by the six dimensions — two statistical lenses on the same data; both distillation rounds' candidate pool stayed within the public datasets of §1, and round 2 introduced no private sources either.
 
 ### 3.4 Mixing-Experiment Methodology
 
@@ -124,7 +124,7 @@ Quality audit, all four checks passed:
 
 1. **Weakness profile as the base**: the six-dimension profile of the v4 base, 8 samples per prompt, showed association at 0.212 as the second-weakest dimension, with 100% reward-signal coverage for that question type;
 2. **Physics was weaker but unusable**: 0.079, even weaker — but synthetic physics data mismatched the eval distribution, with no transfer measured (ph1 experiment, 18.8, within the noise band);
-3. **Official-dimension confirmation**: the finals brief lists "abstract pattern rules: discovering composite rules of matrix figures and logical reasoning, e.g. classic 3×3 IQ tests" as one of the four core dimensions — the pool choice aligns directly with the official direction;
+3. **Official-dimension confirmation**: the finals brief lists "abstract pattern rules: discovering composite rules of matrix figures and logical reasoning, e.g. classic 3×3 IQ tests" as one of the four core task directions (the official brief's task-type grouping; the eval taxonomy is the six dimensions) — the pool choice aligns directly with the official direction;
 4. **Ablation verdict**: abstract single-dim 20.2 > physics single-dim 18.8 > six-dim balanced 17.8 > six-dim augmented 16.8 > counting single-dim 16.4. **Distribution match between the pool and the hidden eval set is the deciding factor, not coverage.**
 
 ## 5. Post-Training Alignment (Reward = Eval Protocol)
