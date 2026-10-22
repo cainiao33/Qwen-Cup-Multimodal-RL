@@ -15,7 +15,7 @@
 
 ## The Competition
 
-Qwen Cup Multimodal Reasoning (initiated by Alibaba's Qwen business unit, co-hosted with Pazhou Lab): given interleaved image-text inputs, the model must answer in the `\boxed{answer}` format. Evaluation is a hidden 500-problem set spanning six dimensions (association / counting / numeric / perception / physics / spatial); platform score = correct / 500 × 100 (0.2 pts per problem), best historical submission counts.
+Qwen Cup Multimodal Reasoning (initiated by Alibaba's Qwen business unit, co-hosted with Pazhou Lab; [official competition page](https://www.aicompetition-pz.com/topic_detail/24)): given interleaved image-text inputs, the model must answer in the `\boxed{answer}` format. Evaluation is a hidden 500-problem set spanning six dimensions (association / counting / numeric / perception / physics / spatial); platform score = correct / 500 × 100 (0.2 pts per problem), best historical submission counts.
 
 Format: preliminary round (SFT stage, Jul 10 – Aug 30 2026, up to 2 submissions/day, top 20 advance) → finals (RL starting from the preliminary model, Sep 5 – 25, up to 5 submissions/day) + online defense (Oct 12). **The organizer provides no training data — data must be self-built**, making data strategy a core competitive axis. Final scoring = model performance 65% + technical proposal 25% + defense 10%.
 
