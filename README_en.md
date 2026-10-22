@@ -15,7 +15,9 @@
 
 ## The Competition
 
-Qwen Cup Multimodal Reasoning: given interleaved image-text inputs, the model must answer in the `\boxed{answer}` format. Evaluation is a hidden 500-problem set spanning six dimensions (association / counting / numeric / perception / physics / spatial); platform score = correct / 500 × 100 (0.2 pts per problem), best historical submission counts.
+Qwen Cup Multimodal Reasoning (initiated by Alibaba's Qwen business unit, co-hosted with Pazhou Lab): given interleaved image-text inputs, the model must answer in the `\boxed{answer}` format. Evaluation is a hidden 500-problem set spanning six dimensions (association / counting / numeric / perception / physics / spatial); platform score = correct / 500 × 100 (0.2 pts per problem), best historical submission counts.
+
+Format: preliminary round (SFT stage, Jul 10 – Aug 30 2026, up to 2 submissions/day, top 20 advance) → finals (RL starting from the preliminary model, Sep 5 – 25, up to 5 submissions/day) + online defense (Oct 12). **The organizer provides no training data — data must be self-built**, making data strategy a core competitive axis. Final scoring = model performance 65% + technical proposal 25% + defense 10%.
 
 Hard rules (the starting point for every engineering decision here):
 
@@ -84,7 +86,7 @@ The answer extractor (`rfind("\boxed{")` + bracket-depth counting) matches the o
 | Steps | **30 (small dose)** | measured peak of the dose axis (below) |
 | LR / KL β | 1e-6 constant / 0.2 | limit weight drift, anchor to the preliminary start |
 | Effective batch | 8 prompts/step, 240 prompts total | 30 steps consume only 14% of the pool — no shortcut overfitting |
-| Data pool | RAVEN 3×3 abstract-reasoning matrices, 1,709 items (single-dimension, high purity) | association (0.212) was the 2nd-weakest dim with 100% reward-signal coverage |
+| Data pool | RAVEN 3×3 abstract-reasoning matrices, 1,709 items (single-dimension, high purity) | association (0.212) was the 2nd-weakest dim with 100% reward-signal coverage — and abstract-pattern matrices (3×3 IQ-test style) are one of the four official finals dimensions |
 | Compliance gate | starting-weights md5 verified byte-for-byte in a pre-training script | hard rule: no intermediate SFT, no other starting point |
 | Cost | 7.5 min end-to-end (212 s = 7.1 s/step) | ablation iterations are extremely cheap |
 
@@ -153,6 +155,7 @@ qianwen-cup-multimodal-rl/
 ├── README.md / README_en.md
 ├── docs/
 │   ├── finals-technical-report.md   # full finals technical report (authoritative source of all numbers)
+│   ├── data-engineering.md          # data engineering: sources/synthesis/cleaning/mixing/RL pool/reward-eval alignment (Chinese)
 │   └── preliminary-sft-notes.md     # preliminary v4 script-package notes (provenance & repro commands)
 ├── sft/                             # Stage 1: teacher-distillation SFT (preliminary v4)
 │   ├── scripts/                     # 5 scripts: train/watchdog/merge/export (server snapshot, sanitized)
@@ -166,7 +169,7 @@ This repo **does not offer one-click end-to-end reproduction**; scope and limits
 
 - **Eval side**: the eval set (6-dim, 500 problems) is not public — platform scores can only come from the organizer; every platform score in this repo is an official reading.
 - **Training side**: training ran on Atlas 900 NPU + CANN + torch_npu. [sft/scripts/](sft/scripts/) holds sanitized snapshots from that environment (only internal paths and the interpreter path replaced with placeholders; logic untouched), with the matching real logs in [sft/logs/](sft/logs/). The GRPO scripts (`grpo_apply_v14.py` et al., including the reward implementation verbatim-aligned with the official eval) are being archived — see [grpo/](grpo/).
-- **Data side**: how the 113K distillate, the 24,251 SFT set, and the 1,709-item RL pool were built is fully documented in §4 of the [technical report](docs/finals-technical-report.md); the data files themselves are not distributed with the repo.
+- **Data side**: how the 3-level data funnel (113K distillate → 24,251 SFT curation → 1,709 RL pool) was sourced, synthesized, cleaned, mixed, and reward-aligned is documented in **[docs/data-engineering.md](docs/data-engineering.md)** (Chinese); full experiment data in the [technical report](docs/finals-technical-report.md) §4–§6. The data files themselves are not distributed with the repo.
 - **Weights**:
 
   | Model | Description | Download |
