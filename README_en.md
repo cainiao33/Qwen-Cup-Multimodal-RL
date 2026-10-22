@@ -7,7 +7,7 @@
 
 > **Overview**: a two-stage post-training pipeline on Qwen3.5-0.8B (multimodal) — teacher-distillation SFT for breadth, then small-dose GRPO reinforcement learning for fine calibration — covering six reasoning dimensions: numeric, counting, spatial, physics, perception, and association. The transferable output is a set of experimental methodologies: verbatim reward-eval alignment, same-weights ZIP-CRC ablation, statistical submission-budget decision-making, and a systematic characterization of the RL dose-forgetting trade-off on 0.8B-scale models.
 >
-> **Results**: preliminary round **41.8 pts** (500 problems, track best 43.6, ranked 20th → advanced) → finals online eval **20.2 pts** (same-protocol SFT baseline 18.2, RL gain **+2.0**), **ranked 9th online**; defense scores and final standings pending — will be added once announced.
+> **Results**: preliminary round **41.8 pts** (500 problems, track best 43.6, **20/337** at the cutoff) → finals online eval **20.2 pts** (same-protocol SFT baseline 18.2, RL gain **+2.0**), **final standing 9/20**; online defense **3rd place** (7th to present among the top 10, with 2 teams withdrawing), **¥20,000 prize**.
 >
 > **How to run**: this repo is positioned as a **complete open-sourcing of the solution** — training/export script snapshots, real training logs, and the full technical report are all included. Training ran on Huawei Atlas 900 NPU + torch_npu (scripts are snapshots of that environment); the eval set is not public, so platform scores cannot be reproduced locally. Model weights are hosted on [Hugging Face](https://huggingface.co/huangxiu/Qwen3.5-0.8B-qwencup) (links in [Reproduction Notes](#-reproduction-notes)).
 
@@ -17,7 +17,7 @@
 
 Qwen Cup Multimodal Reasoning (initiated by Alibaba's Qwen business unit, co-hosted with Pazhou Lab; [official competition page](https://www.aicompetition-pz.com/topic_detail/24)): given interleaved image-text inputs, the model must answer in the `\boxed{answer}` format. Evaluation is a hidden 500-problem set spanning six dimensions (association / counting / numeric / perception / physics / spatial); platform score = correct / 500 × 100 (0.2 pts per problem), best historical submission counts.
 
-Format: preliminary round (SFT stage, Jul 10 – Aug 30 2026, up to 2 submissions/day, top 20 advance) → finals (RL starting from the preliminary model, Sep 5 – 25, up to 5 submissions/day) + online defense (Oct 12). **The organizer provides no training data — data must be self-built**, making data strategy a core competitive axis. Final scoring = model performance 65% + technical proposal 25% + defense 10%.
+Format: preliminary round (SFT stage, Jul 10 – Aug 30 2026, up to 2 submissions/day, 337 teams, top 20 advance) → finals (RL starting from the preliminary model, Sep 5 – 25, up to 5 submissions/day) + online defense (Oct 12, top 10). **The organizer provides no training data — data must be self-built**, making data strategy a core competitive axis. Final scoring = model performance 65% + technical proposal 25% + defense 10%.
 
 Hard rules (the starting point for every engineering decision here):
 
@@ -93,8 +93,8 @@ The answer extractor (`rfind("\boxed{")` + bracket-depth counting) matches the o
 ### Finals result
 
 - v4's baseline under the finals eval protocol is **18.2 pts** (the two rounds use different eval sets; scores are not directly comparable).
-- **rlx30 = v4 + GRPO 30 steps: 20.2 pts** (four submissions: 19.6 / 20.2 / 19.6 / 20.0, μ=19.85, σ=0.29), **ranked 9th online**, same-protocol RL gain +2.0.
-- Defense scores and final standings pending.
+- **rlx30 = v4 + GRPO 30 steps: 20.2 pts** (four submissions: 19.6 / 20.2 / 19.6 / 20.0, μ=19.85, σ=0.29), **finals final standing 9/20**, same-protocol RL gain +2.0.
+- Defense: top 10 advanced to the online defense, 2 teams withdrew, we presented 7th — **3rd place in the defense, ¥20,000 prize**.
 
 ## Findings
 
