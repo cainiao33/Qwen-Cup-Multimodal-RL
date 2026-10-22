@@ -38,7 +38,7 @@ Still server-only (not locally obtainable): training logs `grpo_rlx*.log`, the t
 | RL algorithm | GRPO, TRL 0.29.1, `use_vllm=False` |
 | RL pool | `rl3_data.jsonl` (= `rl3_data_abs.jsonl`), **1,709 [RAVEN](https://github.com/WellyZhang/RAVEN) 3×3 matrices**, 8-way choice, answers `\boxed{1..8}` |
 | Steps | **30** |
-| Learning rate | **1e-6**, constant |
+| Learning rate | **1e-6** (scheduler not explicitly set; TRL default) |
 | KL β | **0.2** |
 | Group size K | **8** |
 | seed | **42** |
@@ -54,7 +54,7 @@ Still server-only (not locally obtainable): training logs `grpo_rlx*.log`, the t
 
 ## 3. Three-Step Reproduction
 
-Default paths are parameterized and can be overridden with the `WH` / `G6D` / `PY` env vars (in-repo defaults are sanitized placeholders; override with real paths on the server):
+Default paths are parameterized and can be overridden with the `WH` / `G6D` / `PY` env vars (in-repo defaults are the sanitized forms of the original server paths; override them when deploying elsewhere):
 
 ```bash
 # 1) Train (with starting-point md5 gate + disk precheck); argument = NPU card id
@@ -80,7 +80,7 @@ Byte-identical md5s are not reproducible (README text and safetensors serializat
 ## 4. Must-Read: Three Pitfalls
 
 1. **rlx30 is not a standalone run.** The original dose-axis script launched **40 steps**; it crashed with a full disk while saving at step 35, so `grpo_rlx40_out/checkpoint-30` was exported instead. Same seed / same data order ⇒ the first 30 steps are bit-identical, so `01_run_rlx30.sh` simply runs 30 steps with a single save at the end (`--save_steps 30 --save_only_model`) — equivalent, without repeating the disk-full crash.
-2. **The export must fix dtype labels.** RL export copies the GRPO (fp32) `config.json` verbatim while the weights are bf16. Unfixed, `from_pretrained` loads as fp32: **3.41 GB vs 1.71 GB and ~2× the load time**. `export_v14.py` has the fix (config / text_config / vision_config), and the `02` script prints `"dtype": "bfloat16"` after export for confirmation.
+2. **The export must fix dtype labels.** RL export copies the GRPO (fp32) `config.json` verbatim while the weights are bf16. If left unfixed, `from_pretrained` loads as fp32: **3.41 GB vs 1.71 GB and ~2× the load time**. `export_v14.py` has the fix (config / text_config / vision_config), and the `02` script prints `"dtype": "bfloat16"` after export for confirmation.
 3. **Do not enable `--mp` (image-scale correction).** Measured 16.4 (−3.45 vs the same-package mean 19.85; −3.8 vs the 20.2 best). Its only difference from rlx30 is two lines in `processor_config.json` / `preprocessor_config.json` — a direction already causally falsified.
 
 ## 5. Version Differences (Disclosed As-Is)

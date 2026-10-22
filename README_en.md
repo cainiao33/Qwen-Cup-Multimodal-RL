@@ -9,7 +9,7 @@
 >
 > **Results**: preliminary round **41.8 pts** (500 problems, track best 43.6, **20/337** at the cutoff) → finals leaderboard score **20.2 pts** (same-protocol SFT baseline 18.2, RL gain **+2.0**), **9th/20 on the finals leaderboard**; once the online defense was scored into the final total we **climbed to 3rd place overall** (top 10 invited, 2 teams withdrew, we presented 7th), **¥20,000 prize**.
 >
-> **How to run**: this repo is positioned as a **complete open-sourcing of the solution** — training/export script snapshots, real training logs, and the full technical report are all included. Training ran on Huawei Atlas 900 NPU + torch_npu (scripts are snapshots of that environment); the eval set is not public, so platform scores cannot be reproduced locally. Model weights are hosted on [Hugging Face](https://huggingface.co/huangxiu/Qwen3.5-0.8B-qwencup) (links in [Reproduction Notes](#-reproduction-notes)).
+> **Repo scope & how to run**: this repo is positioned as a **complete open-sourcing of the solution** — training/export script snapshots, real training logs, and the full technical report are all included. Training ran on Huawei Atlas 900 NPU + torch_npu (scripts are snapshots of that environment); the eval set is not public, so platform scores cannot be reproduced locally. Model weights are hosted on [Hugging Face](https://huggingface.co/huangxiu/Qwen3.5-0.8B-qwencup) (links in [Reproduction Notes](#-reproduction-notes)).
 
 ---
 
@@ -37,7 +37,7 @@ Curated train_v4 (24,251)  ──────────────►   rlx30
 Preliminary 41.8                              Finals 20.2 (SFT baseline 18.2 → +2.0)
 ```
 
-Three design principles: **SFT for breadth, RL for depth** (a 0.8B model has little spare capacity — RL does fine calibration only, avoiding catastrophic forgetting); **protocol alignment** (the training reward matches the official eval script verbatim — zero room for reward hacking); **budget rationality** (each submission is a noisy measurement; allocate them statistically).
+Three key design choices: **SFT for breadth, RL for depth** (a 0.8B model has little spare capacity — RL does fine calibration only, avoiding catastrophic forgetting); **protocol alignment** (the training reward matches the official eval script verbatim — zero room for reward hacking); **budget rationality** (each submission is a noisy measurement; allocate them statistically).
 
 ## Stage 1: Teacher-Distillation SFT (Preliminary 41.8)
 
@@ -49,13 +49,13 @@ Three design principles: **SFT for breadth, RL for depth** (a 0.8B model has lit
 | Image pool | Round 1: CLEVR-Math / ChartQA / ScienceQA / VSR (113,164 images); Round 2 top-up: GQA / PlotQA / PhyX / FSC-147 — 8 public datasets in total, see [data engineering](docs/data-engineering_en.md) |
 | Output | **113,159** LLaVA-style samples (99.996% completion); single-turn `<image>` + Chinese prompt + `\boxed{}` answer, isomorphic to the platform eval format |
 | Throughput | 64 images/batch, 16 concurrent, ~0.85 samples/s |
-| Reliability | 54 h unattended, **all 35 NPU ERR99999 crashes self-healed** (3-layer care: main loop + 30-min keepalive + external supervisor), 75% effective throughput |
+| Reliability | 54 h unattended, **all 35 NPU ERR99999 crashes self-healed** (3-layer self-healing: main loop + 30-min keepalive + external supervisor), 75% effective throughput |
 
 Category distribution: spatial 44,231 (39.1%) / numeric 28,731 (25.4%) / counting 27,203 (24.0%) / perception 12,376 (10.9%) / physics 618 (0.5%) — physics is naturally scarce, the root cause of the later weakness profile.
 
 ### Curation & training (train_v4)
 
-- **First compression of the 3-level data funnel**: 113,159 (full distillate) → **24,251** (SFT curation, drop rate 0.524%); token length p50=325 / p90=1156 / max=2041, all within max_len=2048.
+- **First compression of the 3-level data funnel**: 113,159 (full distillate) → **24,251** (17,924 round-1 curated + 6,327 round-2 top-up; the hard filter dropped only 127 items ≈ 0.524%); token length p50=325 / p90=1156 / max=2041, all within max_len=2048.
 - **Recipe**: LoRA r16 / α32, 2 epochs, lr 1e-4, effective batch 16, max_len 2048, all-linear, seed 42, single NPU.
 - **Variable isolation**: v4 is identical to v3 except data size — after config-side gains (+3.4) were exhausted, the data side delivered +0.4 more.
 - **Training log** (see [sft/logs/](sft/logs/)): 3,032 steps in one uninterrupted run, loss 6.07 → 2.03.
@@ -75,7 +75,7 @@ R = acc + 0.5 × fmt   (effectively a 3-tier discrete reward)
   └─ no \boxed{} extracted                                         → 0.0
 ```
 
-The answer extractor (`rfind("\boxed{")` + bracket-depth counting) matches the official eval script **verbatim**; normalization (strip whitespace/punctuation, full-half-width folding, lowercase) matches the platform scorer exactly ⇒ the training reward *is* the eval objective — no room for reward hacking. Plus zero-gradient guards (monitoring the share of steps with zero within-group reward std) and per-answer-type consistency audits.
+The answer extractor (`rfind("\boxed{")` + bracket-depth counting) matches the official eval script **verbatim**; normalization (strip whitespace/punctuation, full-width→half-width folding, lowercase) matches the platform scorer exactly ⇒ the training reward *is* the eval objective — no room for reward hacking. Plus zero-gradient guards (monitoring the share of steps with zero within-group reward std) and per-answer-type consistency audits.
 
 ### rlx30 recipe
 
@@ -84,7 +84,7 @@ The answer extractor (`rfind("\boxed{")` + bracket-depth counting) matches the o
 | Framework | TRL 0.29.1 GRPOTrainer (use_vllm=False, HF generate sampling) | critic-free, memory-friendly, stable |
 | Group size K | 8 | K16 doubled effective learning yet lost 3.25 pts — K8 is the sweet spot |
 | Steps | **30 (small dose)** | measured peak of the dose axis (below) |
-| LR / KL β | 1e-6 constant / 0.2 | limit weight drift, anchor to the preliminary start |
+| LR / KL β | 1e-6 / 0.2 | limit weight drift, anchor to the preliminary start |
 | Effective batch | 8 prompts/step, 240 prompts total | 30 steps consume only 14% of the pool — no shortcut overfitting |
 | Data pool | RAVEN 3×3 abstract-reasoning matrices, 1,709 items (single-dimension, high purity) | association (0.212) was the 2nd-weakest dim with 100% reward-signal coverage — and abstract-pattern matrices (3×3 IQ-test style) are one of the four core task directions in the official finals brief |
 | Compliance gate | starting-weights md5 verified byte-for-byte in a pre-training script | hard rule: no intermediate SFT, no other starting point |
@@ -126,14 +126,14 @@ Beyond 30 steps the score falls monotonically with dose — larger doses cause c
 
 ### 2. Same-weights ZIP-CRC ablation: causal conclusions without retraining
 
-Four submission packages share one identical set of weights (`model.safetensors` byte-identical; per-member zip CRC audit confirms only `generation_config.json` differs) — **causal inference-side conclusions with zero retraining**:
+Four submission packages share one identical set of weights (`model.safetensors` byte-identical; per-member zip CRC audit: the decoding/gen-length variants differ only in `generation_config.json`, the preprocessing variant additionally changes two lines in `processor_config.json`/`preprocessor_config.json`) — **causal inference-side conclusions with zero retraining**:
 
 | Axis | Sole variable changed | Score | Δ | Conclusion |
 | --- | --- | ---: | ---: | --- |
 | Baseline | platform-default sampling (same-package 4-run μ) | 19.85 | — | the temperature curve peaks exactly at the platform default |
 | Decoding | greedy (do_sample=false) | 16.8 | **−3.05** | sampling is a load-bearing pillar |
 | Decoding | temperature 1.15 / top_p 0.95 | 16.6 | **−3.25** | the default is the peak |
-| Gen length | +max_new_tokens 2048 | 19.8 | −0.05 | zero effect (reverse evidence the weights are identical) |
+| Gen length | +max_new_tokens 2048 | 19.8 | −0.05 | zero effect (reverse evidence that the weights are byte-identical) |
 | Preproc | longest_edge 16,777,216 → 1,638,400 | 16.4 | **−3.45** | 56.7% of eval images lose ~90% of pixels — detail destroyed |
 
 ⇒ Sampling buys ~3 pts for free; keep every inference-side parameter at the platform default.
@@ -147,7 +147,7 @@ Four submission packages share one identical set of weights (`model.safetensors`
 | h7 (counting) | 0.644 | 16.4 |
 | h9k16 (K16) | 2× effective learning | 16.6 |
 
-Four independent points on one line: the more learned in-pool, the lower the platform score. The K16 ablation supplies the mechanism: in-pool reward peak 0.287→0.581 (roughly doubled), zero-gradient steps 51%→27%, yet the score drops 3.25 — a 0.8B model learning RL shortcuts in the pool crowds out its limited capacity at the cost of forgetting other dimensions.
+Four independent data points, one consistent trend: the more learned in-pool, the lower the platform score. The K16 ablation supplies the mechanism: in-pool reward peak 0.287→0.581 (roughly doubled), zero-gradient steps 51%→27%, yet the score drops 3.25 — a 0.8B model learning RL shortcuts in the pool crowds out its limited capacity at the cost of forgetting other dimensions.
 
 The data-pool axis agrees: abstract single-dim (RAVEN 1,709) 20.2 > physics 18.8 > six-dim balanced 17.8 > six-dim augmented 16.8 > counting 16.4 — **distribution match with the hidden eval set is what matters, not coverage**.
 
@@ -156,7 +156,7 @@ The data-pool axis agrees: abstract single-dim (RAVEN 1,709) 20.2 > physics 18.8
 ### 4. Platform noise & statistical budget decisions
 
 - Same package, 4 submissions: σ_judge ≈ 0.29; cross-artifact threshold 1.3–1.6.
-- 13 historical readings μ=17.54, σ=1.57 ⇒ P(new recipe > 20.2) ≈ 1.1% vs re-submitting the best artifact ≈ 11.3%/shot (400k Monte-Carlo trials) ⇒ **decision: re-submit the best artifact; spend quota only where statistics favor it**.
+- 13 historical readings μ=17.54, σ=1.57 ⇒ P(new recipe > 20.2) ≈ 1.1% (400k Monte-Carlo estimate; the normal approximation would give ≈4.5%) vs re-submitting the best artifact ≈ 11.3%/shot ⇒ **decision: re-submit the best artifact; spend quota only where statistics favor it**.
 
 ### Gain decomposition (every layer has a single-variable evidence chain)
 

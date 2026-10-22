@@ -32,7 +32,7 @@
     "data_content": "RAVEN 九宫格抽象推理，8 格推第 9 格，8 选 1，答案 \\boxed{1..8}",
     "steps": 30,
     "learning_rate": 1e-06,
-    "lr_schedule": "constant",
+    "lr_schedule": "not set in trainer (TRL default)",
     "beta_kl": 0.2,
     "num_generations_k": 8,
     "seed": 42,
@@ -69,9 +69,9 @@
     "known_pitfall": "未改写时 from_pretrained 按 fp32 加载：3.41 GB vs 1.71 GB，耗时约 2 倍"
   },
   "ablation_context": {
-    "step_axis": {"10": 19.2, "20": null, "30": 20.2, "50": 17.8, "60": 16.8},
+    "step_axis": {"10": 19.2, "20": 15.2, "30": 20.2, "50": 17.8, "60": 16.8},
     "k_axis": {"8": 20.2, "16": 16.6},
-    "decode_probe": {"temperature_1.15": null, "max_new_tokens_2048": 19.8, "greedy": 16.8},
+    "decode_probe": {"temperature_1.15": 16.6, "max_new_tokens_2048": 19.8, "greedy": 16.8},
     "pool_axis": {
       "abstract_1709": 20.2,
       "six_dim_1336": 17.8,

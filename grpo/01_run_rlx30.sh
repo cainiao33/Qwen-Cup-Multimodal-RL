@@ -52,7 +52,7 @@ else
 fi
 
 # 磁盘预检：当年就是这一步没做才在第 35 步崩
-FREE_G=$(df -BG /data | awk 'NR==2{gsub("G","",$4);print $4}')
+FREE_G=$(df -BG "$G6D" | awk 'NR==2{gsub("G","",$4);print $4}')
 log "磁盘可用 ${FREE_G}G（门槛 30G）"
 [ "${FREE_G:-0}" -ge 30 ] || { log "FATAL 磁盘不足 30G，先清理再开训"; exit 1; }
 

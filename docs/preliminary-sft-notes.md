@@ -1,5 +1,5 @@
 <!-- 脱敏副本:仅内部路径与服务器标识替换,数据与结论未改动 -->
-# 千问杯最高分模型（v4，41.8 分）— 训练脚本与日志包
+# 千问杯本队最高分模型（v4，41.8 分）— 训练脚本与日志包
 
 **简体中文** | [English](preliminary-sft-notes_en.md)
 
@@ -13,7 +13,7 @@
 | 训练窗口 | 2026-08-28 14:13 启动 → 2026-08-29 05:55 完成（单次跑完，无中断无重启） |
 | 数据 | train_v4.jsonl 共 **24251 条** = train_v2 旧数据(17924) + round2 新蒸馏验真后(约 6327，spatial/physics/numeric/counting) |
 | 配置 | 2 epoch / LoRA r16 α32 / lr 1e-4 / bs4 × grad_accum4 (eff_bs 16) / max_len 2048 / 单卡 NPU(2 号卡) |
-| 脚本归属 | v4 与 v3 配置相同、仅数据规模扩大 → 验证「数据侧收益」变量隔离实验（配置 +3.4 已吃满，数据侧再 +0.4） |
+| 对照实验 | v4 与 v3 配置相同、仅数据规模扩大 → 验证「数据侧收益」变量隔离实验（配置 +3.4 已吃满，数据侧再 +0.4） |
 | 关联权重 | 备份盘 `蒸馏任务交付/g6d/model_submit_v4.zip`（1.36GB，8/29 13:14 导出） |
 
 ## 1. 包内文件
@@ -26,6 +26,8 @@
 | scripts/g6d_export_submit_v4.py | LoRA 合并导出 | 合并 → submit_Qwen3p5-0.8B-g6d-v4/（提交指南目录结构） |
 | logs/finetune_v4.log | **v4 训练完整日志** | 3032 步全程：loss 6.07 → 2.03，guard 挂载与正常退出记录 |
 | logs/export_submit_v4.log | v4 导出日志 | 8/29 12:41 LoRA 合并 → model.safetensors 1.7GB 输出清单 |
+
+注：上表为原始交付包的目录结构；在本仓库中对应 `sft/scripts/` 与 `sft/logs/`。
 
 ## 2. 版本溯源（如实说明）
 - 4 个 v4 专用脚本（train_v4.sh / guard_v4.sh / merge_train_v4.py / export_submit_v4.py）：本地 `scripts/` 与服务器 **md5 字节级一致**（已核对），为权威快照。

@@ -11,7 +11,7 @@
 ```
 113,164 candidate images    113,159 distilled samples    24,251 SFT curated      1,709 RL targeted pool
 (4 public datasets, round 1) ──►  (Qwen3.6-27B teacher)  ──►  (clean+verify+mix)  ──►  (RAVEN single-dim)
-                                99.996% completion          0.524% drop rate         100% reward coverage
+                                99.996% completion          0.524% hard filter       100% reward coverage
                                                             ▲                        ▲
                                                      SFT breadth-first         RL depth-first
                                                      (preliminary 41.8)        (finals 20.2)
@@ -53,7 +53,7 @@ train_v4 did not come entirely from the round-1 candidate pool: beyond the 17,92
 | Batching | 64 images/batch, 16 concurrent, ~0.85 samples/s |
 | Output | **113,159** LLaVA-style samples (99.996% completion) |
 | Format | Single-turn dialogue: `<image>` + Chinese prompt + `\boxed{}` answer — isomorphic to the official eval extraction format (the official eval requires the "final answer inside \boxed{}", otherwise it cannot be parsed) |
-| Reliability | 54 h unattended, **all 35 NPU ERR99999 crashes self-healed** (three-layer care: main-loop retry + 30-min keepalive + external supervisor), 75% effective throughput |
+| Reliability | 54 h unattended, **all 35 NPU ERR99999 crashes self-healed** (three-layer self-healing: main-loop retry + 30-min keepalive + external supervisor), 75% effective throughput |
 
 Category distribution of the synthesis output (labeled by eval dimension):
 
@@ -65,11 +65,11 @@ Category distribution of the synthesis output (labeled by eval dimension):
 | perception | 12,376 | 10.9% |
 | physics | 618 | **0.5%** |
 
-**The natural scarcity of physics is the key finding of this step**: physics-commonsense material is extremely rare in public data pools, which planted the seed of the later "weakness profile → RL dimension choice" decision chain (see §5).
+**The natural scarcity of physics is the key finding of this step**: physics-commonsense material is extremely rare in public data pools, which planted the seed of the later "weakness profile → RL dimension choice" decision chain (see §4.2).
 
 ## 3. Cleaning & Verification (How It Was Cleaned)
 
-Level two of the funnel: 113,159 → 24,251, **total drop rate only 0.524%**. Cleaning was not aggressive pruning but three things: "verify + filter + merge":
+Level two of the funnel: 113,159 → 24,251 — round 1 kept 17,924 by quality & mix curation, round 2 added a 6,327 top-up; the hard filter itself dropped only 127 items (**0.524%**). Cleaning was not aggressive pruning but three things: "verify + filter + merge":
 
 ### 3.1 Hard Filters
 
@@ -95,7 +95,7 @@ Round 2 topped up distillation for spatial / physics / numeric / counting (image
 | perception | 14.8% | Fine-grained visual perception / OCR text extraction |
 | Abstract shapes | 7.25% | Abstract pattern rules (3×3 IQ-test matrices) |
 
-The top two categories exactly cover the first two official finals dimensions; abstract shapes take only 7.25% but preserved a foundation in that direction for the RL stage (see §5 — which is exactly where the final RL gain came from).
+The top two categories exactly cover the first two official finals dimensions; abstract shapes take only 7.25% but preserved a foundation in that direction for the RL stage (see §4.2 — which is exactly where the final RL gain came from).
 
 Note: the percentages in this table categorize the same training data **by the official brief's four task directions** (a task-type grouping; the eval taxonomy is the six dimensions), while §2 labels by the six dimensions — two statistical lenses on the same data; both distillation rounds' candidate pool stayed within the public datasets of §1, and round 2 introduced no private sources either.
 
@@ -141,7 +141,7 @@ R = acc + 0.5 × fmt  (structurally equivalent to a 3-tier discrete reward)
 | Alignment item | Implementation |
 | --- | --- |
 | Answer extraction | Same algorithm as the official `extract_boxed_answer`: `rfind` + bracket-depth counting, 100% support for arbitrary nesting |
-| Answer normalization | Strip whitespace / punctuation / full-half-width folding + lowercase — exactly the platform scorer's protocol |
+| Answer normalization | Strip whitespace / punctuation, fold full-width→half-width + lowercase — exactly the platform scorer's protocol |
 | Conclusion | **The training reward is the eval objective — no room for reward hacking.** The only way to raise the reward is to answer correctly. |
 
 Companion robustness designs:
