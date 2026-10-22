@@ -46,7 +46,7 @@ Three design principles: **SFT for breadth, RL for depth** (a 0.8B model has lit
 | Item | Value |
 | --- | --- |
 | Teacher | Qwen3.6-27B, local vLLM inference (bf16, TP=2) |
-| Image pool | 4 public datasets — CLEVR-Math / ChartQA / ScienceQA / VSR, 113,164 images total |
+| Image pool | Round 1: CLEVR-Math / ChartQA / ScienceQA / VSR (113,164 images); Round 2 top-up: GQA / PlotQA / PhyX / FSC-147 — 8 public datasets in total, see [data engineering](docs/data-engineering.md) |
 | Output | **113,159** LLaVA-style samples (99.996% completion); single-turn `<image>` + Chinese prompt + `\boxed{}` answer, isomorphic to the platform eval format |
 | Throughput | 64 images/batch, 16 concurrent, ~0.85 samples/s |
 | Reliability | 54 h unattended, **all 35 NPU ERR99999 crashes self-healed** (3-layer care: main loop + 30-min keepalive + external supervisor), 75% effective throughput |
@@ -184,6 +184,6 @@ This repo **does not offer one-click end-to-end reproduction**; scope and limits
 - The competition organizers for the eval platform and compute
 - [Qwen](https://github.com/QwenLM) model family (Qwen3.5-0.8B base & Qwen3.6-27B teacher)
 - [TRL](https://github.com/huggingface/trl) · [vLLM](https://github.com/vllm-project/vllm) · [PEFT](https://github.com/huggingface/peft)
-- CLEVR-Math / ChartQA / ScienceQA / VSR (distillation pool) · RAVEN (RL pool)
+- CLEVR-Math / ChartQA / ScienceQA / VSR + GQA / PlotQA / PhyX / FSC-147 (distillation pool, 2 rounds) · RAVEN (RL pool)
 
 License: TBD.

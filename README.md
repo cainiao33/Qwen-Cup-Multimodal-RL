@@ -46,7 +46,7 @@ Qwen3.6-27B 教师 (vLLM, TP=2, bf16)     初赛 v4 权重 (md5 合规门禁)
 | 项 | 值 |
 | --- | --- |
 | 教师模型 | Qwen3.6-27B,本地 vLLM 推理(bf16,TP=2) |
-| 候选图像池 | CLEVR-Math / ChartQA / ScienceQA / VSR 四个公开数据集,共 113,164 张 |
+| 候选图像池 | 第一轮 CLEVR-Math / ChartQA / ScienceQA / VSR(113,164 张);round2 补蒸追加 GQA / PlotQA / PhyX / FSC-147——两轮共 8 个公开数据集,详见 [数据工程](docs/data-engineering.md) |
 | 产出 | **113,159 条** LLaVA 风格样本(完成度 99.996%),单轮 `<image>` + 中文提示 + `\boxed{}` 答案,与平台评测口径同构 |
 | 吞吐 | 每批 64 图、并发 16,~0.85 条/s |
 | 工程可靠性 | 54 小时无人值守,**35 次 NPU ERR99999 崩溃全部自愈**(主循环 + keepalive 30min + 外部监督三层看护),有效吞吐 75% |
@@ -184,6 +184,6 @@ Qwen-Cup-Multimodal-RL/
 - 赛事主办方提供评测平台与算力环境
 - [Qwen](https://github.com/QwenLM) 系列模型(基座 Qwen3.5-0.8B 与教师 Qwen3.6-27B)
 - [TRL](https://github.com/huggingface/trl) · [vLLM](https://github.com/vllm-project/vllm) · [PEFT](https://github.com/huggingface/peft)
-- CLEVR-Math / ChartQA / ScienceQA / VSR(蒸馏候选池)· RAVEN(RL 数据池)
+- CLEVR-Math / ChartQA / ScienceQA / VSR + GQA / PlotQA / PhyX / FSC-147(蒸馏候选池,两轮)· RAVEN(RL 数据池)
 
 License:待定。
