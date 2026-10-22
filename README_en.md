@@ -7,7 +7,7 @@
 
 > **Overview**: a two-stage post-training pipeline on Qwen3.5-0.8B (multimodal) — teacher-distillation SFT for breadth, then small-dose GRPO reinforcement learning for fine calibration — covering six reasoning dimensions: numeric, counting, spatial, physics, perception, and association. The transferable output is a set of experimental methodologies: verbatim reward-eval alignment, same-weights ZIP-CRC ablation, statistical submission-budget decision-making, and a systematic characterization of the RL dose-forgetting trade-off on 0.8B-scale models.
 >
-> **Results**: preliminary round **41.8 pts** (500 problems, track best 43.6, **20/337** at the cutoff) → finals online eval **20.2 pts** (same-protocol SFT baseline 18.2, RL gain **+2.0**), **9th/20 on the online leaderboard**; once the online defense was scored into the final total we **climbed to 3rd place overall** (top 10 invited, 2 teams withdrew, we presented 7th), **¥20,000 prize**.
+> **Results**: preliminary round **41.8 pts** (500 problems, track best 43.6, **20/337** at the cutoff) → finals leaderboard score **20.2 pts** (same-protocol SFT baseline 18.2, RL gain **+2.0**), **9th/20 on the finals leaderboard**; once the online defense was scored into the final total we **climbed to 3rd place overall** (top 10 invited, 2 teams withdrew, we presented 7th), **¥20,000 prize**.
 >
 > **How to run**: this repo is positioned as a **complete open-sourcing of the solution** — training/export script snapshots, real training logs, and the full technical report are all included. Training ran on Huawei Atlas 900 NPU + torch_npu (scripts are snapshots of that environment); the eval set is not public, so platform scores cannot be reproduced locally. Model weights are hosted on [Hugging Face](https://huggingface.co/huangxiu/Qwen3.5-0.8B-qwencup) (links in [Reproduction Notes](#-reproduction-notes)).
 
@@ -64,7 +64,7 @@ Category distribution: spatial 44,231 (39.1%) / numeric 28,731 (25.4%) / countin
 
 **41.8 pts** (500 problems, qwen-plus judge), track best 43.6, ranked 20th — advanced to the finals.
 
-## Stage 2: Small-Dose GRPO RL (Finals online 20.2, online rank 9/20)
+## Stage 2: Small-Dose GRPO RL (finals leaderboard 20.2, rank 9/20)
 
 ### Reward design: verbatim alignment with the eval (core)
 
@@ -93,7 +93,7 @@ The answer extractor (`rfind("\boxed{")` + bracket-depth counting) matches the o
 ### Finals result
 
 - v4's baseline under the finals eval protocol is **18.2 pts** (the two rounds use different eval sets; scores are not directly comparable).
-- **rlx30 = v4 + GRPO 30 steps: 20.2 pts** (four submissions: 19.6 / 20.2 / 19.6 / 20.0, μ=19.85, σ=0.29), **9th/20 on the finals online leaderboard**, same-protocol RL gain +2.0.
+- **rlx30 = v4 + GRPO 30 steps: 20.2 pts** (four submissions: 19.6 / 20.2 / 19.6 / 20.0, μ=19.85, σ=0.29), **9th/20 on the finals leaderboard**, same-protocol RL gain +2.0.
 - Defense: top 10 advanced to the online defense, 2 teams withdrew, we presented 7th — with the defense score added, **final overall standing climbed to 3rd place (9th online → 3rd overall), ¥20,000 prize**.
 
 ## Leaderboards (Results Disclosure)
@@ -104,11 +104,11 @@ Team name: **广州智行科技 (Guangzhou Zhixing Tech)**. Official leaderboard
 
 ![Preliminary leaderboard](docs/assets/leaderboard/preliminary-leaderboard.png)
 
-**Finals online eval — 20.2 pts, 9th place**
+**Finals leaderboard — 20.2 pts, 9th place**
 
 ![Finals leaderboard](docs/assets/leaderboard/finals-leaderboard.png)
 
-**Final standings — finals online 9/20; 3rd place overall after the defense score (top-10 defense, 2 withdrawals, presented 7th)**
+**Final standings — finals leaderboard 20.2 (9th/20); 3rd place overall after the defense score (top-10 defense, 2 withdrawals, presented 7th)**
 
 ![Final standings](docs/assets/leaderboard/final-standings.png)
 
