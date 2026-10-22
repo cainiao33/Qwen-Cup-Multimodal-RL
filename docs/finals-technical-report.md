@@ -1,6 +1,8 @@
 <!-- 脱敏副本:仅内部路径与服务器标识替换,数据与结论未改动 -->
 # 千问杯多模态推理大赛 · 决赛技术方案（rlx30）
 
+**简体中文** | [English](finals-technical-report_en.md)
+
 ## 1. 项目概述
 
 本方案面向千问杯多模态推理大赛决赛。参赛模型为 **Qwen3.5-0.8B-Instruct 多模态版本**（基于 Qwen3.5 架构，含视觉编码器），通过「教师蒸馏 SFT + GRPO 小剂量强化学习」两阶段后训练流水线构建，覆盖评测六维能力（数值推理 numeric、计数 counting、空间推理 spatial、物理常识 physics、感知 perception、关联 association）。

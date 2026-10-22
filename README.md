@@ -172,10 +172,10 @@ R = acc + 0.5 × fmt  (结构上等效于三档离散奖励)
 Qwen-Cup-Multimodal-RL/
 ├── README.md / README_en.md
 ├── docs/
-│   ├── finals-technical-report.md   # 决赛完整技术方案(全部实验数据的权威来源)
-│   ├── data-engineering.md          # 数据工程:来源/合成/清洗/配比/RL 池/奖励-评测对齐
-│   ├── preliminary-sft-notes.md     # 初赛 v4 脚本包说明(版本溯源与复现命令)
-│   └── assets/leaderboard/          # 官方排行榜截图(初赛/决赛/终榜)
+│   ├── finals-technical-report.md / _en.md  # 决赛完整技术方案(全部实验数据的权威来源)
+│   ├── data-engineering.md / _en.md         # 数据工程:来源/合成/清洗/配比/RL 池/奖励-评测对齐
+│   ├── preliminary-sft-notes.md / _en.md    # 初赛 v4 脚本包说明(版本溯源与复现命令)
+│   └── assets/leaderboard/                  # 官方排行榜截图(初赛/决赛/终榜)
 ├── sft/                             # 阶段一:教师蒸馏 SFT(初赛 v4)
 │   ├── scripts/                     # 训练/看门狗/数据合并/导出 5 脚本(服务器快照·脱敏)
 │   └── logs/                        # 真实训练与导出日志(3,032 步,loss 6.07 → 2.03)

@@ -46,7 +46,7 @@ Three design principles: **SFT for breadth, RL for depth** (a 0.8B model has lit
 | Item | Value |
 | --- | --- |
 | Teacher | Qwen3.6-27B, local vLLM inference (bf16, TP=2) |
-| Image pool | Round 1: CLEVR-Math / ChartQA / ScienceQA / VSR (113,164 images); Round 2 top-up: GQA / PlotQA / PhyX / FSC-147 — 8 public datasets in total, see [data engineering](docs/data-engineering.md) |
+| Image pool | Round 1: CLEVR-Math / ChartQA / ScienceQA / VSR (113,164 images); Round 2 top-up: GQA / PlotQA / PhyX / FSC-147 — 8 public datasets in total, see [data engineering](docs/data-engineering_en.md) |
 | Output | **113,159** LLaVA-style samples (99.996% completion); single-turn `<image>` + Chinese prompt + `\boxed{}` answer, isomorphic to the platform eval format |
 | Throughput | 64 images/batch, 16 concurrent, ~0.85 samples/s |
 | Reliability | 54 h unattended, **all 35 NPU ERR99999 crashes self-healed** (3-layer care: main loop + 30-min keepalive + external supervisor), 75% effective throughput |
@@ -122,7 +122,7 @@ Team name: **广州智行科技 (Guangzhou Zhixing Tech)**. Official leaderboard
 
 Beyond 30 steps the score falls monotonically with dose — larger doses cause catastrophic forgetting (mechanism in Finding 3).
 
-> Anecdote: the 30-step recipe itself was born of an accident — a 40-step run crashed with a full disk at step 35, and `checkpoint-30` was salvaged (bit-equivalent to a standalone 30-step run under the same seed/data order). The dose-axis ablation later confirmed 30 as the peak; see [grpo/README.md](grpo/README.md).
+> Anecdote: the 30-step recipe itself was born of an accident — a 40-step run crashed with a full disk at step 35, and `checkpoint-30` was salvaged (bit-equivalent to a standalone 30-step run under the same seed/data order). The dose-axis ablation later confirmed 30 as the peak; see [grpo/README_en.md](grpo/README_en.md).
 
 ### 2. Same-weights ZIP-CRC ablation: causal conclusions without retraining
 
@@ -172,10 +172,10 @@ The data-pool axis agrees: abstract single-dim (RAVEN 1,709) 20.2 > physics 18.8
 Qwen-Cup-Multimodal-RL/
 ├── README.md / README_en.md
 ├── docs/
-│   ├── finals-technical-report.md   # full finals technical report (authoritative source of all numbers)
-│   ├── data-engineering.md          # data engineering: sources/synthesis/cleaning/mixing/RL pool/reward-eval alignment (Chinese)
-│   ├── preliminary-sft-notes.md     # preliminary v4 script-package notes (provenance & repro commands)
-│   └── assets/leaderboard/          # official leaderboard screenshots (preliminary / finals / final standings)
+│   ├── finals-technical-report.md / _en.md  # full finals technical report (authoritative source of all numbers)
+│   ├── data-engineering.md / _en.md         # data engineering: sources/synthesis/cleaning/mixing/RL pool/reward-eval alignment
+│   ├── preliminary-sft-notes.md / _en.md    # preliminary v4 script-package notes (provenance & repro commands)
+│   └── assets/leaderboard/                  # official leaderboard screenshots (preliminary / finals / final standings)
 ├── sft/                             # Stage 1: teacher-distillation SFT (preliminary v4)
 │   ├── scripts/                     # 5 scripts: train/watchdog/merge/export (server snapshot, sanitized)
 │   └── logs/                        # real training & export logs (3,032 steps, loss 6.07 → 2.03)
@@ -188,8 +188,8 @@ This repo **does not offer one-click end-to-end reproduction**; scope and limits
 
 - **Eval side**: the eval set (6-dim, 500 problems) is not public — platform scores can only come from the organizer; every platform score in this repo is an official reading.
 - **Dependencies**: RL side pinned — **TRL 0.29.1** (full hyperparameters in [grpo/config_rlx30.json](grpo/config_rlx30.json)); SFT side ships as NPU server snapshots (Atlas 900 + CANN + torch_npu), versions not separately pinned — the script snapshots are authoritative.
-- **Training side**: training ran on Atlas 900 NPU + CANN + torch_npu. [sft/scripts/](sft/scripts/) holds sanitized snapshots from that environment (only internal paths and the interpreter path replaced with placeholders; logic untouched), with the matching real logs in [sft/logs/](sft/logs/). The GRPO side is now **complete**: the 3-step pipeline (`01_run_rlx30.sh` train → `02_export_rlx30.sh` export+pack → `03_pack_flat_zip.py` verify), the trainer `grpo_apply_v14.py` with the reward implementation verbatim-aligned with the official eval (both the 2026-09-15 and 09-18 revisions included), and all remaining originals — every md5 verified against the manifest. Workflow and known pitfalls in [grpo/README.md](grpo/README.md). Training logs and the 09-13 training-day revision remain server-only.
-- **Data side**: how the 3-level data funnel (113K distillate → 24,251 SFT curation → 1,709 RL pool) was sourced, synthesized, cleaned, mixed, and reward-aligned is documented in **[docs/data-engineering.md](docs/data-engineering.md)** (Chinese); full experiment data in the [technical report](docs/finals-technical-report.md) §4–§6. The data files themselves are not distributed with the repo.
+- **Training side**: training ran on Atlas 900 NPU + CANN + torch_npu. [sft/scripts/](sft/scripts/) holds sanitized snapshots from that environment (only internal paths and the interpreter path replaced with placeholders; logic untouched), with the matching real logs in [sft/logs/](sft/logs/). The GRPO side is now **complete**: the 3-step pipeline (`01_run_rlx30.sh` train → `02_export_rlx30.sh` export+pack → `03_pack_flat_zip.py` verify), the trainer `grpo_apply_v14.py` with the reward implementation verbatim-aligned with the official eval (both the 2026-09-15 and 09-18 revisions included), and all remaining originals — every md5 verified against the manifest. Workflow and known pitfalls in [grpo/README_en.md](grpo/README_en.md). Training logs and the 09-13 training-day revision remain server-only.
+- **Data side**: how the 3-level data funnel (113K distillate → 24,251 SFT curation → 1,709 RL pool) was sourced, synthesized, cleaned, mixed, and reward-aligned is documented in **[docs/data-engineering_en.md](docs/data-engineering_en.md)**; full experiment data in the [technical report](docs/finals-technical-report_en.md) §4–§6. The data files themselves are not distributed with the repo.
 - **Weights**:
 
   | Model | Description | Download |
