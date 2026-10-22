@@ -1,2 +1,6 @@
 # CodeGraph local index (machine-local tool artifact)
 .codegraph/
+
+# Python bytecode
+__pycache__/
+*.pyc
