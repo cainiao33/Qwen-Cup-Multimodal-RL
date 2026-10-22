@@ -174,7 +174,8 @@ Qwen-Cup-Multimodal-RL/
 ├── docs/
 │   ├── finals-technical-report.md   # full finals technical report (authoritative source of all numbers)
 │   ├── data-engineering.md          # data engineering: sources/synthesis/cleaning/mixing/RL pool/reward-eval alignment (Chinese)
-│   └── preliminary-sft-notes.md     # preliminary v4 script-package notes (provenance & repro commands)
+│   ├── preliminary-sft-notes.md     # preliminary v4 script-package notes (provenance & repro commands)
+│   └── assets/leaderboard/          # official leaderboard screenshots (preliminary / finals / final standings)
 ├── sft/                             # Stage 1: teacher-distillation SFT (preliminary v4)
 │   ├── scripts/                     # 5 scripts: train/watchdog/merge/export (server snapshot, sanitized)
 │   └── logs/                        # real training & export logs (3,032 steps, loss 6.07 → 2.03)
