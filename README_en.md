@@ -64,7 +64,7 @@ Category distribution: spatial 44,231 (39.1%) / numeric 28,731 (25.4%) / countin
 
 **41.8 pts** (500 problems, qwen-plus judge), track best 43.6, ranked 20th — advanced to the finals.
 
-## Stage 2: Small-Dose GRPO RL (Finals 20.2, 9th online)
+## Stage 2: Small-Dose GRPO RL (Finals 20.2, 9/20)
 
 ### Reward design: verbatim alignment with the eval (core)
 
@@ -95,6 +95,22 @@ The answer extractor (`rfind("\boxed{")` + bracket-depth counting) matches the o
 - v4's baseline under the finals eval protocol is **18.2 pts** (the two rounds use different eval sets; scores are not directly comparable).
 - **rlx30 = v4 + GRPO 30 steps: 20.2 pts** (four submissions: 19.6 / 20.2 / 19.6 / 20.0, μ=19.85, σ=0.29), **finals final standing 9/20**, same-protocol RL gain +2.0.
 - Defense: top 10 advanced to the online defense, 2 teams withdrew, we presented 7th — **3rd place in the defense, ¥20,000 prize**.
+
+## Leaderboards (Results Disclosure)
+
+Team name: **广州智行科技 (Guangzhou Zhixing Tech)**. Official leaderboard screenshots from all three stages:
+
+**Preliminary — 41.8 pts, 20/337 at the top-20 cutoff**
+
+![Preliminary leaderboard](docs/assets/leaderboard/preliminary-leaderboard.png)
+
+**Finals online eval — 20.2 pts, 9th place**
+
+![Finals leaderboard](docs/assets/leaderboard/finals-leaderboard.png)
+
+**Final standings — finals 9/20; 3rd place in the online defense (top-10 defense, 2 withdrawals, presented 7th)**
+
+![Final standings](docs/assets/leaderboard/final-standings.png)
 
 ## Findings
 
