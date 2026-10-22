@@ -48,7 +48,7 @@ Qwen3.6-27B 教师 (vLLM, TP=2, bf16)        初赛 v4 权重 (md5 合规门禁)
 | 项     | 值                                                                                  |
 | ----- | ---------------------------------------------------------------------------------- |
 | 教师模型  | Qwen3.6-27B，本地 vLLM 推理（端口 8001，NPU 0+1，bf16，TP=2）                                  |
-| 候选图像池 | 4 个公开数据集混合：CLEVR-Math、ChartQA、ScienceQA、VSR，共 113,164 张                            |
+| 候选图像池 | 4 个公开数据集混合：[CLEVR-Math](https://github.com/dali-does/clevr-math)、[ChartQA](https://github.com/vis-nlp/ChartQA)、[ScienceQA](https://scienceqa.github.io/)、[VSR](https://github.com/cambridgeltl/visual-spatial-reasoning)，共 113,164 张                            |
 | 产出    | **113,159 条** LLaVA 风格样本（完成度 99.996%）                                              |
 | 格式    | 单轮对话：`<image>` + 中文提示 + `\boxed{}` 答案（与平台评测口径同构）                                   |
 | 批处理   | 每批 64 张图、并发 16、吞吐 ~0.85 条/s                                                        |
@@ -69,7 +69,7 @@ Qwen3.6-27B 教师 (vLLM, TP=2, bf16)        初赛 v4 权重 (md5 合规门禁)
 
 | 项    | 值                                                                                                                                                  |
 | ---- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 池    | `rl3_data_abs.jsonl`：1,709 条 **RAVEN 九宫格抽象推理**（单维高浓度）                                                                                              |
+| 池    | `rl3_data_abs.jsonl`：1,709 条 **[RAVEN](https://github.com/WellyZhang/RAVEN) 九宫格抽象推理**（单维高浓度）                                                                                              |
 | 任务形式 | 九宫格前 8 格规律推第 9 格，8 选 1，答案 = 编号 1-8 → `\boxed{5}`                                                                                                   |
 | 选维依据 | 六维基线画像（v4 底、每 prompt 8 采样）：association 0.212 为第二弱维且奖励信号 100% 可覆盖；physics 0.079 更弱但合成数据分布与评测不匹配、实测无迁移（ph1 实验，18.8 分），故选 association 对应的 abstract 题型 |
 | 质量审计 | boxed 可抽取率 100% / 奖励信号覆盖 100%（答案全为可精确匹配的编号）/ 图片零重复 / 绝对路径回读校验                                                                                      |

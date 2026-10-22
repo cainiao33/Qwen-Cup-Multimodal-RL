@@ -207,7 +207,7 @@ Also thanks to:
 - The School of Computer Science and Engineering, Sun Yat-sen University for the Atlas 900 server compute
 - [Qwen](https://github.com/QwenLM) model family (Qwen3.5-0.8B base & Qwen3.6-27B teacher)
 - [TRL](https://github.com/huggingface/trl) · [vLLM](https://github.com/vllm-project/vllm) · [PEFT](https://github.com/huggingface/peft)
-- CLEVR-Math / ChartQA / ScienceQA / VSR + GQA / PlotQA / PhyX / FSC-147 (distillation pool, 2 rounds) · RAVEN (RL pool)
+- Public datasets: [CLEVR-Math](https://github.com/dali-does/clevr-math) · [ChartQA](https://github.com/vis-nlp/ChartQA) · [ScienceQA](https://scienceqa.github.io/) · [VSR](https://github.com/cambridgeltl/visual-spatial-reasoning) + [GQA](https://cs.stanford.edu/people/dorarad/gqa/index.html) · [PlotQA](https://github.com/NiteshMethani/PlotQA) · [PhyX](https://phyx-bench.github.io/) · [FSC-147](https://github.com/cvlab-stonybrook/LearningToCountEverything) (distillation pool, 2 rounds) · [RAVEN](https://github.com/WellyZhang/RAVEN) (RL pool)
 
 ## License
 

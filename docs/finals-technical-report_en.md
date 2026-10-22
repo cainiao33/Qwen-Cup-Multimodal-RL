@@ -48,7 +48,7 @@ Key design principles:
 | Item | Value |
 | --- | --- |
 | Teacher | Qwen3.6-27B, local vLLM inference (port 8001, NPU 0+1, bf16, TP=2) |
-| Image pool | 4 public datasets mixed: CLEVR-Math, ChartQA, ScienceQA, VSR — 113,164 images |
+| Image pool | 4 public datasets mixed: [CLEVR-Math](https://github.com/dali-does/clevr-math), [ChartQA](https://github.com/vis-nlp/ChartQA), [ScienceQA](https://scienceqa.github.io/), [VSR](https://github.com/cambridgeltl/visual-spatial-reasoning) — 113,164 images |
 | Output | **113,159** LLaVA-style samples (99.996% completion) |
 | Format | Single-turn: `<image>` + Chinese prompt + `\boxed{}` answer (isomorphic to the platform eval protocol) |
 | Batching | 64 images/batch, 16 concurrent, ~0.85 samples/s |
@@ -69,7 +69,7 @@ Category distribution: spatial 44,231 (39.1%) / numeric 28,731 (25.4%) / countin
 
 | Item | Value |
 | --- | --- |
-| Pool | `rl3_data_abs.jsonl`: 1,709 **RAVEN 3×3 abstract-reasoning** items (single-dimension, high purity) |
+| Pool | `rl3_data_abs.jsonl`: 1,709 **[RAVEN](https://github.com/WellyZhang/RAVEN) 3×3 abstract-reasoning** items (single-dimension, high purity) |
 | Task form | Infer the 9th cell from the first 8 of a 3×3 grid, 8-way choice, answer = index 1–8 → `\boxed{5}` |
 | Dimension choice | Six-dimension baseline profile (v4 base, 8 samples per prompt): association 0.212, the 2nd-weakest, with 100% reward-signal coverage; physics 0.079 was weaker, but synthetic data mismatched the eval distribution with no transfer measured (ph1 experiment, 18.8 pts) — hence the abstract question type corresponding to association |
 | Quality audit | boxed extraction 100% / reward coverage 100% (answers all exactly-matchable indices) / zero duplicate images / absolute-path read-back verified |

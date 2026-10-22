@@ -36,7 +36,7 @@
 | 起点 | `submit_Qwen3p5-0.8B-g6d-v4`(初赛 41.8 分包,`model.safetensors` md5 `34475d88f4e1d4fc26543e8a64db7bf8`) |
 | SFT 底座配方 | 基座 + `train_v4.jsonl` 24,251 条 / 2 ep / lr 1e-4 / LoRA r16 α32 / seed 42(决赛口径基线 18.2) |
 | RL 算法 | GRPO,TRL 0.29.1,`use_vllm=False` |
-| RL 池 | `rl3_data.jsonl`(= `rl3_data_abs.jsonl`)**1,709 条 RAVEN 九宫格**,8 选 1,答案 `\boxed{1..8}` |
+| RL 池 | `rl3_data.jsonl`(= `rl3_data_abs.jsonl`)**1,709 条 [RAVEN](https://github.com/WellyZhang/RAVEN) 九宫格**,8 选 1,答案 `\boxed{1..8}` |
 | 步数 | **30** |
 | 学习率 | **1e-6**,constant |
 | KL β | **0.2** |

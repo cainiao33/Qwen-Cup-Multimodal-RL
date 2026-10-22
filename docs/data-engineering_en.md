@@ -25,10 +25,10 @@ The organizer provides no training data ⇒ all training data was self-built. Th
 
 | Dataset | Nature | Targeted dimension |
 | --- | --- | --- |
-| CLEVR-Math | Synthetic scene geometry, counting & numeric reasoning | Counting / numeric computation |
-| ChartQA | Chart question answering | Numeric (tables / bills) |
-| ScienceQA | Science-knowledge multimodal QA | Physics commonsense |
-| VSR | Visual spatial-relation judgment | Spatial reasoning / fine-grained perception |
+| [CLEVR-Math](https://github.com/dali-does/clevr-math) | Synthetic scene geometry, counting & numeric reasoning | Counting / numeric computation |
+| [ChartQA](https://github.com/vis-nlp/ChartQA) | Chart question answering | Numeric (tables / bills) |
+| [ScienceQA](https://scienceqa.github.io/) | Science-knowledge multimodal QA | Physics commonsense |
+| [VSR](https://github.com/cambridgeltl/visual-spatial-reasoning) | Visual spatial-relation judgment | Spatial reasoning / fine-grained perception |
 
 Pool-selection principle: aim at the six preliminary-round dimensions (numeric, counting, spatial reasoning, physics commonsense, fine-grained visual perception, image-text association), using public datasets as the base and the teacher model for synthetic annotation — avoiding the cost and scale bottlenecks of human labeling. All four bases are public academic benchmarks: ChartQA (ACL 2021), ScienceQA (NeurIPS 2022), VSR (TACL 2022), CLEVR-Math (a synthetic math-reasoning set derived from CLEVR).
 
@@ -38,10 +38,10 @@ train_v4 did not come entirely from the round-1 candidate pool: beyond the 17,92
 
 | Dataset | Nature | Targeted direction (six-dim pool) |
 | --- | --- | --- |
-| GQA (CVPR 2019) | Scene-graph question answering | spatial |
-| PlotQA (WACV 2020) | Chart numeric question answering | numeric |
-| FSC-147 (NeurIPS 2021) | Open-world object counting | counting |
-| PhyX | Physics-commonsense image-text | physics |
+| [GQA](https://cs.stanford.edu/people/dorarad/gqa/index.html) (CVPR 2019) | Scene-graph question answering | spatial |
+| [PlotQA](https://github.com/NiteshMethani/PlotQA) (WACV 2020) | Chart numeric question answering | numeric |
+| [FSC-147](https://github.com/cvlab-stonybrook/LearningToCountEverything) (NeurIPS 2021) | Open-world object counting | counting |
+| [PhyX](https://phyx-bench.github.io/) | Physics-commonsense image-text | physics |
 
 > Evidence: the `POOL_MAP` in [sft/scripts/merge_train_v4.py](../sft/scripts/merge_train_v4.py) assigns round-2 samples to the four pools above by their `source` field (a provenance layer the finals technical report did not expand on). Two rounds total **8 public datasets, no private data sources anywhere**.
 
@@ -109,7 +109,7 @@ Funnel level three: not coverage, but **distribution match + reward-signal purit
 
 ### 4.1 Pool Construction
 
-`rl3_data_abs.jsonl`: **1,709 RAVEN 3×3 abstract-reasoning matrices** (RAVEN, Zhang et al., CVPR 2019, a public abstract-reasoning dataset) — infer the 9th cell from the first 8, 8-way choice, answer is an index 1–8 (as `\boxed{5}`).
+`rl3_data_abs.jsonl`: **1,709 [RAVEN](https://github.com/WellyZhang/RAVEN) 3×3 abstract-reasoning matrices** (Zhang et al., CVPR 2019, a public abstract-reasoning dataset) — infer the 9th cell from the first 8, 8-way choice, answer is an index 1–8 (as `\boxed{5}`).
 
 Quality audit, all four checks passed:
 

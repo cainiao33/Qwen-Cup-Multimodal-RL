@@ -25,10 +25,10 @@
 
 | 数据集 | 性质 | 对应考察方向 |
 | --- | --- | --- |
-| CLEVR-Math | 合成场景几何计数与数值推理 | 计数 / 数值计算 |
-| ChartQA | 图表问答 | 数值计算(表格/账单类) |
-| ScienceQA | 科学知识多模态问答 | 物理常识 |
-| VSR | 视觉空间关系判断 | 空间推理 / 细粒度感知 |
+| [CLEVR-Math](https://github.com/dali-does/clevr-math) | 合成场景几何计数与数值推理 | 计数 / 数值计算 |
+| [ChartQA](https://github.com/vis-nlp/ChartQA) | 图表问答 | 数值计算(表格/账单类) |
+| [ScienceQA](https://scienceqa.github.io/) | 科学知识多模态问答 | 物理常识 |
+| [VSR](https://github.com/cambridgeltl/visual-spatial-reasoning) | 视觉空间关系判断 | 空间推理 / 细粒度感知 |
 
 选池原则:对准初赛六大考察维度(数值计算、计数、空间推理、物理常识、细粒度视觉感知、图文联想),以公开数据集为底座、教师模型合成标注——规避人工标注的成本与规模瓶颈。四个底座均为公开学术基准:ChartQA(ACL 2021)、ScienceQA(NeurIPS 2022)、VSR(TACL 2022)、CLEVR-Math(CLEVR 衍生的合成数学推理集)。
 
@@ -38,10 +38,10 @@ train_v4 并非全部来自第一轮候选池:在 v2 旧精选 17,924 条之外,
 
 | 数据集 | 性质 | 补充方向(六维 pool) |
 | --- | --- | --- |
-| GQA(CVPR 2019) | 场景图问答 | spatial |
-| PlotQA(WACV 2020) | 图表数值问答 | numeric |
-| FSC-147(NeurIPS 2021) | 开放世界目标计数 | counting |
-| PhyX | 物理常识图文 | physics |
+| [GQA](https://cs.stanford.edu/people/dorarad/gqa/index.html)(CVPR 2019) | 场景图问答 | spatial |
+| [PlotQA](https://github.com/NiteshMethani/PlotQA)(WACV 2020) | 图表数值问答 | numeric |
+| [FSC-147](https://github.com/cvlab-stonybrook/LearningToCountEverything)(NeurIPS 2021) | 开放世界目标计数 | counting |
+| [PhyX](https://phyx-bench.github.io/) | 物理常识图文 | physics |
 
 > 证据:[sft/scripts/merge_train_v4.py](../sft/scripts/merge_train_v4.py) 的 `POOL_MAP` 按 round2 样本的 `source` 字段将新数据归入上述四池(决赛技术方案未展开这一层来源)。两轮合计 **8 个公开数据集,全程无私有数据源**。
 
@@ -109,7 +109,7 @@ v3 → v4 的演进是**变量隔离实验**:配置完全相同(2 epoch / LoRA r
 
 ### 4.1 池子构建
 
-`rl3_data_abs.jsonl`:**RAVEN 九宫格抽象推理 1,709 条**(RAVEN,Zhang et al., CVPR 2019,公开抽象推理数据集)——前 8 格规律推第 9 格,8 选 1,答案为编号 1–8(`\boxed{5}` 形式)。
+`rl3_data_abs.jsonl`:**[RAVEN](https://github.com/WellyZhang/RAVEN) 九宫格抽象推理 1,709 条**(Zhang et al., CVPR 2019,公开抽象推理数据集)——前 8 格规律推第 9 格,8 选 1,答案为编号 1–8(`\boxed{5}` 形式)。
 
 质量审计四项全过:
 

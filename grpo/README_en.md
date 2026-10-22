@@ -36,7 +36,7 @@ Still server-only (not locally obtainable): training logs `grpo_rlx*.log`, the t
 | Starting point | `submit_Qwen3p5-0.8B-g6d-v4` (preliminary 41.8-pt package, `model.safetensors` md5 `34475d88f4e1d4fc26543e8a64db7bf8`) |
 | SFT base recipe | base + `train_v4.jsonl` 24,251 samples / 2 ep / lr 1e-4 / LoRA r16 α32 / seed 42 (finals-protocol baseline 18.2) |
 | RL algorithm | GRPO, TRL 0.29.1, `use_vllm=False` |
-| RL pool | `rl3_data.jsonl` (= `rl3_data_abs.jsonl`), **1,709 RAVEN 3×3 matrices**, 8-way choice, answers `\boxed{1..8}` |
+| RL pool | `rl3_data.jsonl` (= `rl3_data_abs.jsonl`), **1,709 [RAVEN](https://github.com/WellyZhang/RAVEN) 3×3 matrices**, 8-way choice, answers `\boxed{1..8}` |
 | Steps | **30** |
 | Learning rate | **1e-6**, constant |
 | KL β | **0.2** |
