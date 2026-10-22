@@ -203,7 +203,8 @@ Qwen-Cup-Multimodal-RL/
 
 同时感谢:
 
-- 赛事主办方提供评测平台与算力环境
+- 赛事主办方提供评测平台
+- 中山大学计算机学院提供 Atlas 900 服务器算力支持
 - [Qwen](https://github.com/QwenLM) 系列模型(基座 Qwen3.5-0.8B 与教师 Qwen3.6-27B)
 - [TRL](https://github.com/huggingface/trl) · [vLLM](https://github.com/vllm-project/vllm) · [PEFT](https://github.com/huggingface/peft)
 - CLEVR-Math / ChartQA / ScienceQA / VSR + GQA / PlotQA / PhyX / FSC-147(蒸馏候选池,两轮)· RAVEN(RL 数据池)

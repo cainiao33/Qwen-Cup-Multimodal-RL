@@ -203,7 +203,8 @@ Thanks to our teammates on team 广州智行科技 @JaysonWong017 · @bgunshui �
 
 Also thanks to:
 
-- The competition organizers for the eval platform and compute
+- The competition organizers for the eval platform
+- The School of Computer Science and Engineering, Sun Yat-sen University for the Atlas 900 server compute
 - [Qwen](https://github.com/QwenLM) model family (Qwen3.5-0.8B base & Qwen3.6-27B teacher)
 - [TRL](https://github.com/huggingface/trl) · [vLLM](https://github.com/vllm-project/vllm) · [PEFT](https://github.com/huggingface/peft)
 - CLEVR-Math / ChartQA / ScienceQA / VSR + GQA / PlotQA / PhyX / FSC-147 (distillation pool, 2 rounds) · RAVEN (RL pool)
