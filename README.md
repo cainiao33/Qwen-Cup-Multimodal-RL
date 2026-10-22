@@ -199,6 +199,10 @@ Qwen-Cup-Multimodal-RL/
 
 ## 致谢
 
+感谢队伍「广州智行科技」的队友们 @JaysonWong017 · @bgunshui · @qiuy-ue · @LESIWOLEE——从公开数据自建训练池、教师蒸馏与清洗,到决赛 RL 的每一轮迭代,这份方案是五个人一起磨出来的。
+
+同时感谢:
+
 - 赛事主办方提供评测平台与算力环境
 - [Qwen](https://github.com/QwenLM) 系列模型(基座 Qwen3.5-0.8B 与教师 Qwen3.6-27B)
 - [TRL](https://github.com/huggingface/trl) · [vLLM](https://github.com/vllm-project/vllm) · [PEFT](https://github.com/huggingface/peft)
