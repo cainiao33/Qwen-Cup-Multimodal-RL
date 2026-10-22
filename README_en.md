@@ -186,4 +186,7 @@ This repo **does not offer one-click end-to-end reproduction**; scope and limits
 - [TRL](https://github.com/huggingface/trl) · [vLLM](https://github.com/vllm-project/vllm) · [PEFT](https://github.com/huggingface/peft)
 - CLEVR-Math / ChartQA / ScienceQA / VSR + GQA / PlotQA / PhyX / FSC-147 (distillation pool, 2 rounds) · RAVEN (RL pool)
 
-License: TBD.
+## License
+
+- **This repository (code, scripts, docs)**: [MIT License](LICENSE) — free to use, modify, and redistribute.
+- **Model weights** (v4 / rlx30 on Hugging Face) are fine-tuned derivatives of Qwen3.5-0.8B and follow the [original Qwen model license](https://huggingface.co/Qwen).

@@ -186,4 +186,7 @@ Qwen-Cup-Multimodal-RL/
 - [TRL](https://github.com/huggingface/trl) · [vLLM](https://github.com/vllm-project/vllm) · [PEFT](https://github.com/huggingface/peft)
 - CLEVR-Math / ChartQA / ScienceQA / VSR + GQA / PlotQA / PhyX / FSC-147(蒸馏候选池,两轮)· RAVEN(RL 数据池)
 
-License:待定。
+## License
+
+- **本仓库(代码、脚本、文档)**:[MIT License](LICENSE)——可自由使用、修改与分发。
+- **模型权重**(Hugging Face 上的 v4 / rlx30)为 Qwen3.5-0.8B 的微调衍生权重,遵循 [Qwen 原始模型许可协议](https://huggingface.co/Qwen)。
