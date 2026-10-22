@@ -153,7 +153,7 @@ The data-pool axis agrees: abstract single-dim (RAVEN 1,709) 20.2 > physics 18.8
 ## Repository Layout
 
 ```
-qianwen-cup-multimodal-rl/
+Qwen-Cup-Multimodal-RL/
 ├── README.md / README_en.md
 ├── docs/
 │   ├── finals-technical-report.md   # full finals technical report (authoritative source of all numbers)

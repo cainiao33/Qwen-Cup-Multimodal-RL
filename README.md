@@ -153,7 +153,7 @@ R = acc + 0.5 × fmt  (结构上等效于三档离散奖励)
 ## 目录结构
 
 ```
-qianwen-cup-multimodal-rl/
+Qwen-Cup-Multimodal-RL/
 ├── README.md / README_en.md
 ├── docs/
 │   ├── finals-technical-report.md   # 决赛完整技术方案(全部实验数据的权威来源)
