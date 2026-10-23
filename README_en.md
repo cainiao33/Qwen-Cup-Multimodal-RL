@@ -175,6 +175,7 @@ Qwen-Cup-Multimodal-RL/
 │   ├── finals-technical-report.md / _en.md  # full finals technical report (authoritative source of all numbers)
 │   ├── data-engineering.md / _en.md         # data engineering: sources/synthesis/cleaning/mixing/RL pool/reward-eval alignment
 │   ├── preliminary-sft-notes.md / _en.md    # preliminary v4 script-package notes (provenance & repro commands)
+│   ├── official-sample-data.md / _en.md     # official sample dataset walkthrough: record anatomy + 11-example gallery
 │   └── assets/leaderboard/                  # official leaderboard screenshots (preliminary / finals / final standings)
 ├── sft/                             # Stage 1: teacher-distillation SFT (preliminary v4)
 │   ├── scripts/                     # 5 scripts: train/watchdog/merge/export (server snapshot, sanitized)
@@ -189,7 +190,7 @@ This repo **does not offer one-click end-to-end reproduction**; scope and limits
 - **Eval side**: the eval set (6-dim, 500 problems) is not public — platform scores can only come from the organizer; every platform score in this repo is an official reading.
 - **Dependencies**: RL side pinned — **TRL 0.29.1** (full hyperparameters in [grpo/config_rlx30.json](grpo/config_rlx30.json)); SFT side ships as NPU server snapshots (Atlas 900 + CANN + torch_npu), versions not separately pinned — the script snapshots are authoritative.
 - **Training side**: training ran on Atlas 900 NPU + CANN + torch_npu. [sft/scripts/](sft/scripts/) holds sanitized snapshots from that environment (only internal paths and the interpreter path replaced with placeholders; logic untouched), with the matching real logs in [sft/logs/](sft/logs/). The GRPO side is now **complete**: the 3-step pipeline (`01_run_rlx30.sh` train → `02_export_rlx30.sh` export+pack → `03_pack_flat_zip.py` verify), the trainer `grpo_apply_v14.py` with the reward implementation verbatim-aligned with the official eval (both the 2026-09-15 and 09-18 revisions included), and all remaining originals — every md5 verified against the manifest. Workflow and known pitfalls in [grpo/README_en.md](grpo/README_en.md). Training logs and the 09-13 training-day revision remain server-only.
-- **Data side**: how the 3-level data funnel (113K distillate → 24,251 SFT curation → 1,709 RL pool) was sourced, synthesized, cleaned, mixed, and reward-aligned is documented in **[docs/data-engineering_en.md](docs/data-engineering_en.md)**; full experiment data in the [technical report](docs/finals-technical-report_en.md) §4–§6. The data files themselves are not distributed with the repo.
+- **Data side**: how the 3-level data funnel (113K distillate → 24,251 SFT curation → 1,709 RL pool) was sourced, synthesized, cleaned, mixed, and reward-aligned is documented in **[docs/data-engineering_en.md](docs/data-engineering_en.md)**; full experiment data in the [technical report](docs/finals-technical-report_en.md) §4–§6. The data files themselves are not distributed with the repo; a curated walkthrough of the organizers' official sample dataset (training-format examples, 1,000 records) is at **[docs/official-sample-data_en.md](docs/official-sample-data_en.md)**.
 - **Weights**:
 
   | Model | Description | Download |
