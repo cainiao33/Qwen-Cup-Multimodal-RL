@@ -6,7 +6,7 @@
 
 ---
 
-## 0. Overview: A Three-Level Data Funnel
+## 0. Overview: Three-Level Data Filtering
 
 ```
 113,164 candidate images    113,159 distilled samples    24,251 SFT curated      1,709 RL targeted pool
@@ -69,7 +69,7 @@ Category distribution of the synthesis output (labeled by eval dimension):
 
 ## 3. Cleaning & Verification (How It Was Cleaned)
 
-Level two of the funnel: 113,159 → 24,251 — round 1 kept 17,924 by quality & mix curation, round 2 added a 6,327 top-up; the hard filter itself dropped only 127 items (**0.524%**). Cleaning was not aggressive pruning but three things: "verify + filter + merge":
+Level two of the filtering: 113,159 → 24,251 — round 1 kept 17,924 by quality & mix curation, round 2 added a 6,327 top-up; the hard filter itself dropped only 127 items (**0.524%**). Cleaning was not aggressive pruning but three things: "verify + filter + merge":
 
 ### 3.1 Hard Filters
 
@@ -105,7 +105,7 @@ The v3 → v4 progression is a **variable-isolation experiment**: identical conf
 
 ## 4. RL Targeted Concentration (1,709 Items)
 
-Funnel level three: not coverage, but **distribution match + reward-signal purity**.
+Filtering level three: not coverage, but **distribution match + reward-signal purity**.
 
 ### 4.1 Pool Construction
 
@@ -150,9 +150,9 @@ Companion robustness designs:
 - **Zero-gradient guard**: monitors `frac_reward_zero_std` (share of steps where all in-group rewards are equal ⇒ zero gradient), preventing accumulation of wasted steps;
 - **Format floor 0.05**: wrong-but-well-formatted answers keep a tiny gradient so the format-learning signal never dies.
 
-## 6. Data-to-Score Mapping (Evidence at Every Funnel Level)
+## 6. Data-to-Score Mapping (Evidence at Every Filtering Level)
 
-| Funnel level | Data | Corresponding model / score |
+| Filtering level | Data | Corresponding model / score |
 | --- | --- | --- |
 | Full distillate | 113,159 | synthesis base (not trained on directly) |
 | SFT curated | 24,251 (train_v4) | v4: preliminary **41.8**, finals-protocol baseline 18.2 |

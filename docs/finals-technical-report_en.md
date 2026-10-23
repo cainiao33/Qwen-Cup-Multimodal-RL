@@ -74,7 +74,7 @@ Category distribution: spatial 44,231 (39.1%) / numeric 28,731 (25.4%) / countin
 | Dimension choice | Six-dimension baseline profile (v4 base, 8 samples per prompt): association 0.212, the 2nd-weakest, with 100% reward-signal coverage; physics 0.079 was weaker, but synthetic data mismatched the eval distribution with no transfer measured (ph1 experiment, 18.8 pts) — hence the choice of the abstract question type corresponding to association |
 | Quality audit | boxed extraction 100% / reward coverage 100% (answers all exactly-matchable indices) / zero duplicate images / absolute-path read-back verified |
 
-The three-level data funnel: **113,159 (full distillate) → 24,251 (17,924 SFT-curated + 6,327 round-2 top-up, hard filter drops only 0.524%) → 1,709 (RL targeted concentration)**; SFT breadth-first, RL depth-first.
+The three-level data filtering: **113,159 (full distillate) → 24,251 (17,924 SFT-curated + 6,327 round-2 top-up, hard filter drops only 0.524%) → 1,709 (RL targeted concentration)**; SFT breadth-first, RL depth-first.
 
 ## 5. Base Model & SFT Training
 

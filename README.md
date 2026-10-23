@@ -55,7 +55,7 @@ Qwen3.6-27B 教师 (vLLM, TP=2, bf16)     初赛 v4 权重 (md5 合规门禁)
 
 ### SFT 精选与训练(train_v4)
 
-- **三级数据漏斗的第一级压缩**:113,159(蒸馏全量)→ **24,251**(一轮精选 17,924 + round2 补蒸 6,327;清洗硬过滤仅丢 127 条 ≈0.524%);token 长度 p50=325 / p90=1156 / max=2041,max_len=2048 全量通过。
+- **三级数据过滤的第一级压缩**:113,159(蒸馏全量)→ **24,251**(一轮精选 17,924 + round2 补蒸 6,327;清洗硬过滤仅丢 127 条 ≈0.524%);token 长度 p50=325 / p90=1156 / max=2041,max_len=2048 全量通过。
 - **配方**:LoRA r16 / α32,2 epoch,lr 1e-4,有效 batch 16,max_len 2048,all-linear,seed 42,单卡 NPU。
 - **变量隔离设计**:v4 与 v3 配置完全相同、仅数据规模扩大——配置侧收益(+3.4)已吃满后,验证数据侧再 +0.4。
 - **训练日志**(见 [sft/logs/](sft/logs/)):3,032 步一次跑完无中断,loss 6.07 → 2.03。
@@ -190,7 +190,7 @@ Qwen-Cup-Multimodal-RL/
 - **评测侧**:评测集(六维 500 题)不公开,平台分只能由赛事方评测产生;仓库内全部平台分均为官方评测读数。
 - **依赖**:RL 侧关键版本已锁定——**TRL 0.29.1**(全量超参见 [grpo/config_rlx30.json](grpo/config_rlx30.json));SFT 侧依赖随 NPU 服务器快照(Atlas 900 + CANN + torch_npu),未单独锁定版本,以脚本快照为准。
 - **训练侧**:训练在 Atlas 900 NPU + CANN + torch_npu 环境完成。[sft/scripts/](sft/scripts/) 为该环境服务器快照的**脱敏副本**(仅内部路径与解释器路径替换为占位符,逻辑未改动),配套 [sft/logs/](sft/logs/) 为对应真实训练日志。GRPO 侧已**完整入库**:三步流水(`01_run_rlx30.sh` 训练 → `02_export_rlx30.sh` 导出打包 → `03_pack_flat_zip.py` 校验)、训练主程序 `grpo_apply_v14.py`(含与官方评测逐字一致的奖励函数实现,附 09-15/09-18 两版)及其余原件,md5 与 MANIFEST 逐一核对一致;复现流程与已知坑见 [grpo/README.md](grpo/README.md)。训练日志与 09-13 训练当日版仅存服务器。
-- **数据侧**:三级数据漏斗(113K 蒸馏合成 → 24,251 SFT 清洗精选 → 1,709 RL 定向浓缩)的来源、合成、清洗、配比与奖励-评测对齐详见 **[docs/data-engineering.md](docs/data-engineering.md)**;完整实验数据见[技术报告](docs/finals-technical-report.md) §4–§6。数据文件本身未随仓库分发;官方发布的示例数据集(训练格式样例,1,000 条)抽样解析见 **[docs/official-sample-data.md](docs/official-sample-data.md)**。
+- **数据侧**:三级数据过滤(113K 蒸馏合成 → 24,251 SFT 清洗精选 → 1,709 RL 定向浓缩)的来源、合成、清洗、配比与奖励-评测对齐详见 **[docs/data-engineering.md](docs/data-engineering.md)**;完整实验数据见[技术报告](docs/finals-technical-report.md) §4–§6。数据文件本身未随仓库分发;官方发布的示例数据集(训练格式样例,1,000 条)抽样解析见 **[docs/official-sample-data.md](docs/official-sample-data.md)**。
 - **权重**:
 
   | 模型 | 说明 | 下载 |
